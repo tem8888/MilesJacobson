@@ -1,7 +1,7 @@
 module.exports = {
-	name: 'reg',
+	name: 'анкета',
 	description: 'Send registration info',
-	execute(message, args) {
+	execute(message, args=null) {
 
 		if (message.channel.type === 'dm') {
 

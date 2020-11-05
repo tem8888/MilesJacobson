@@ -61,7 +61,7 @@ client.on('guildMemberRemove', (member) => {
 client.on('message', message => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return
 
-  const args = message.content.slice(PREFIX.length).trim().split(/ +/)
+  const args = message.content.slice(PREFIX.length).trim().split(/\n+| +/)
   const commandName = args.shift().toLowerCase()
 
   if (!client.commands.has(commandName)) return;
