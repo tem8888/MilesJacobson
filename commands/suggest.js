@@ -4,11 +4,8 @@ module.exports = {
     execute(message, args) {
 
         if (message.channel.type === 'dm') {
-            let suggestChannelID = '740707344601579611'
-            console.log(args)
             let msg = message.content.slice(5)
-
-            message.client.channels.cache.get(suggestChannelID).send({embed:{
+            message.client.channels.cache.get(process.env.SUGGEST_CHANNEL).send({embed:{
                 "color": 3553599,
                 "description": `${msg}`,
                 "author": {

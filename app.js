@@ -19,10 +19,10 @@ client.once('ready', () => {
 })
 
 client.on('guildMemberAdd', (member) => {
-  member.roles.add('735557557598552095');
-  let generalChannel = client.channels.cache.get("740707344601579611"); // Replace with known channel ID
+  member.roles.add(process.env.GUEST_ROLE);
+  let generalChannel = client.channels.cache.get(process.env.GUEST_CHANNEL); // Replace with known channel ID
   generalChannel.send("Добро пожаловать, <@" + member.user.id + ">!");
-  const nmsg = member.guild.channels.cache.get('740707344601579611');
+  const nmsg = member.guild.channels.cache.get(process.env.GUEST_CHANNEL);
   nmsg.send({embed:{
 	  color: 16777215,
 	  title: "Правила ⇓",
@@ -54,7 +54,7 @@ client.on('guildMemberAdd', (member) => {
  });
 
 client.on('guildMemberRemove', (member) => {
-  let generalChannel = client.channels.cache.get("740707344601579611"); // Replace with known channel ID
+  let generalChannel = client.channels.cache.get(process.env.GUEST_CHANNEL); // Replace with known channel ID
   generalChannel.send("Прощаемся с <@" + member.user.id + ">!");
  });
 
@@ -75,6 +75,5 @@ client.on('message', message => {
 	}
 
 });
-
 
 client.login(process.env.BOT_TOKEN);
