@@ -1,0 +1,25 @@
+{
+  "name": "milesjacobson",
+  "version": "1.0.0",
+  "description": "Simple Discord Bot",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.12.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tem8888/MilesJacobson.git"
+  },
+  "author": "tem <tem.isdev@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tem8888/MilesJacobson/issues"
+  },
+  "homepage": "https://github.com/tem8888/MilesJacobson#readme"
+}
