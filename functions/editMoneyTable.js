@@ -4,13 +4,12 @@ let statsMessageTable = null
 const editMoneyTable = (message) => {
   User.find({ }) // Получаем список клубов с измененными балансами
     .then( async (userList) => { 
-      let msgContent = ''
       let clubs = ''
       let money = ''
       let users = ''
       for (user of userList) {
         clubs += `**${user.club}**\n▔▔▔▔▔▔▔▔\n`
-        userss += `**${user.username}**\n▔▔▔▔▔▔▔▔\n`
+        users += `**${user.username}**\n▔▔▔▔▔▔▔▔\n`
         money += `**${user.money}**\n▔▔▔▔\n`
       }
 

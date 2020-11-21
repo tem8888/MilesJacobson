@@ -10,8 +10,8 @@ module.exports = {
 			return
 		if (args.length < 2) 
 			return message.channel.send(`❌ Ошибка! Запись должна содержать минимум 3 аргумента (**уникальный номер игрока**, **имя игрока**, **цена**)!`);
-		if (!Number.isInteger(Number(args[args.length-1])))
-			return message.channel.send(`❌ Ошибка! Неправильная запись "Цены за игрока"!`);
+		if (!Number.isInteger(Number(args[args.length-1])) || Number(args[args.length-1]) < 0)
+			return message.channel.send(`❌ Ошибка! Неправильная запись цены за игрока.`);
 
 	//	let place = args[0]
 		let price = args[args.length-1]
@@ -22,7 +22,7 @@ module.exports = {
 			player += ` ${args[i]}`
 
 		message.client.channels.cache.get(process.env.BID_SEND_CHANNEL)
-			.send(`> Бид от **${message.author.tag}**! Игрок:**${player}**. Price: **${price}**`);		
+			.send(`> Бид от **${message.author.tag}**! Игрок:**${player}** (id: ${playerId}). Price: **${price}**`);		
 
 		
 		User.findOne({userId: message.author.id})
