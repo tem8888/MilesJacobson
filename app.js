@@ -1,5 +1,8 @@
+// Бид может делать только 1 человек, т.к. проверяется ID пользователя
+
 const fs = require('fs')
 const Discord = require('discord.js')
+const mongoose = require('mongoose')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 require('dotenv').config()
@@ -10,12 +13,19 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`)
-	client.commands.set(command.name, command)
+  client.commands.set(command.name, command)
 }
 
-client.once('ready', () => { 
-	console.log('Ready!')
-	client.user.setActivity('Football Manager 2021'); 
+client.once('ready', async () => { 
+	console.log('Bot is ready!')
+  client.user.setActivity('Football Manager 2021'); 
+  await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => console.log('MongoDB connected.'))
+  .catch((e) => console.log(`Error: ${e}`))
 })
 
 client.on('guildMemberAdd', (member) => {
