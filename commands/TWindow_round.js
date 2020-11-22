@@ -16,7 +16,7 @@ module.exports = {
 		let round = Number(args[0]) // номер раунда как второй параметр
 
 		if (args[1] === 'start') {
-			message.channel.send(`РАУНД ${round} НАЧАЛСЯ.`);
+			message.channel.send(`☑️ РАУНД ${round} НАЧАЛСЯ.`);
 			roundStart(round)
 		} 
 		if (args[1] === 'check') {
@@ -26,7 +26,7 @@ module.exports = {
 					for (user of users) {
 						msgContent += `🦥 ${user.username}\n`
 					}
-					message.channel.send(`Кто еще не сделал бид?\n${msgContent}`);
+					message.channel.send(`Кто еще не сделал бид?\n\n${msgContent}`);
 				})
 		} 
 		else if (args[1] === 'end') {

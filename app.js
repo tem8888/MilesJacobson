@@ -5,6 +5,7 @@ const Discord = require('discord.js')
 const mongoose = require('mongoose')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
+const sendBid = require('./commands/TWindow_sendBid')
 require('dotenv').config()
 
 const PREFIX = process.env.PREFIX
@@ -66,6 +67,16 @@ client.on('guildMemberRemove', (member) => {
   let generalChannel = client.channels.cache.get(process.env.GUEST_CHANNEL); // Replace with known channel ID
   generalChannel.send("Прощаемся с <@" + member.user.id + ">!");
  });
+
+client.on('messageReactionAdd', (reaction, user) => {
+  let message = reaction.message, emoji = reaction.emoji;
+  if (message.channel.type !== 'dm') return
+
+  if (emoji.name == '💷' && !user.bot) {
+    let bidmsg = message.content.split('\n')
+    sendBid.execute(message, [bidmsg[1].slice(6,-2), bidmsg[2].slice(13,-2), user.id, user.username])
+  }
+})
 
 client.on('message', message => {
 	if (!message.content.startsWith(PREFIX) || message.author.bot) return
