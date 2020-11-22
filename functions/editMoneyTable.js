@@ -27,7 +27,7 @@ const editMoneyTable = (message) => {
             inline: true
           },
           {
-            name: `💰 Баланс   _ _`,
+            name: `💰 Бюджет   _ _`,
             value: `_ _\n_ _  ${money}`,
             inline: true
           },

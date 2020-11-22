@@ -1,9 +1,10 @@
 const User = require('../models/User')
 const Bid = require('../models/Bid')
+const Transfer = require('../models/Transfer')
 const sendWinnersMessages = require('../functions/sendWinnersMessages')
 const editMoneyTable = require('../functions/editMoneyTable');
-const updateBids = require('../functions/updateBids');
-const updateUsers = require('../functions/updateUsers');
+const roundEnd = require('../functions/roundEnd');
+const roundStart = require('../functions/roundStart');
 
 module.exports = {
 	name: 'round',
@@ -12,11 +13,11 @@ module.exports = {
 
 		if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send(`❌ Недостаточно прав.`);
 		if (args.length !== 2) return message.channel.send(`❌ Неправильное число аргументов.`);
-		let round = args[0] // номер раунда как второй параметр
+		let round = Number(args[0]) // номер раунда как второй параметр
 
 		if (args[1] === 'start') {
-			message.channel.send(`РАУНД ${2} НАЧАЛСЯ.`);
-		//	updateUsers(round)
+			message.channel.send(`РАУНД ${round} НАЧАЛСЯ.`);
+			roundStart(round)
 		} 
 		if (args[1] === 'check') {
 			let msgContent = ''
@@ -81,11 +82,13 @@ module.exports = {
 			//		console.log(bidWinnersList)
 					await User.findOneAndUpdate( // обновляем баланс клубов в БД
 						{userId: winnerBid.userId}, {$inc: {money: -winnerBid.price, coeff: 1}}, {useFindAndModify: false})
+					await Transfer.findOneAndUpdate(
+						{uid: winnerBid.playerId}, {status: 'finished'}, {upsert: true, useFindAndModify: false})
 				}
 
 				editMoneyTable(message) // Редактируем таблицу с балансами команд
 				sendWinnersMessages(bidWinnersList, message) // Отправляем сообщения о совершившихся трансферах
-				updateBids(round) // Обновляем поле Раунд для бидов
+				roundEnd(round) // Обновляем поле Раунд для бидов
 
 			})
 			.catch((error) => { console.log('error: ', error) })
