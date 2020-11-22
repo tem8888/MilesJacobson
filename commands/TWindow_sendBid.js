@@ -1,7 +1,6 @@
 const Bid = require('../models/Bid')
 const User = require('../models/User')
 const Transfer = require('../models/Transfer')
-const uids = require('../data/uids')
 
 module.exports = {
 	name: 'bid',
