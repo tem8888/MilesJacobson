@@ -7,6 +7,8 @@ module.exports = {
 	description: 'Reset all rounds, delete all bids',
 	execute(message, args=null) {
 
+		if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send(`❌ Недостаточно прав.`);
+		
     Bid.deleteMany({}).then(() => message.channel.send(`✅ Биды удалены.`))
 		User.updateMany({}, {currentRound: 1, nextRound: 1, coeff: 1}).then(() => message.channel.send(`✅ Раунды сброшены.`))
 		Transfer.updateMany({}, {status: ''}).then(() => null)

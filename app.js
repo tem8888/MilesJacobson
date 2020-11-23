@@ -6,6 +6,9 @@ const mongoose = require('mongoose')
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 const sendBid = require('./commands/TWindow_sendBid')
+const editMoneyTable = require('./functions/editMoneyTable');
+const User = require('./models/User')
+const Squad = require('./models/Squad')
 require('dotenv').config()
 
 const PREFIX = process.env.PREFIX
@@ -68,11 +71,38 @@ client.on('guildMemberRemove', (member) => {
   generalChannel.send("Прощаемся с <@" + member.user.id + ">!");
  });
 
-client.on('messageReactionAdd', (reaction, user) => {
+client.on('messageReactionAdd', async (reaction, user) => {
   let message = reaction.message, emoji = reaction.emoji;
-  if (message.channel.type !== 'dm') return
+  
+  // Подтверждение трансфера между менеджерами
+  if (emoji.name == '✅' && message.channel.id === process.env.TRANSFERS_CHANNEL && emoji.reaction.count === 1) {
+    let reBrackets = /\[(.*?)\]/g;
+    let changeInfo = [];
+    let found = ''
+    while(found = reBrackets.exec(message.content)) { changeInfo.push(found[1]) }
 
-  if (emoji.name == '💷' && !user.bot) {
+    if (changeInfo.length === 6) { // Правки для обмена и покупки
+      await User.findOneAndUpdate( // обновляем баланс 
+        {club: changeInfo[4]}, {$inc: {money: Number(changeInfo[3])-Number(changeInfo[0])}}, {useFindAndModify: false})
+      await User.findOneAndUpdate( 
+        {club: changeInfo[1]}, {$inc: {money: Number(changeInfo[0])-Number(changeInfo[3])}}, {useFindAndModify: false})
+      // меняем у игрока клубы местами
+      await Squad.findOneAndUpdate({uid: changeInfo[2]}, {club: changeInfo[1], mins: 0}, {useFindAndModify: false})
+      await Squad.findOneAndUpdate({uid: changeInfo[5]}, {club: changeInfo[4], mins: 0}, {useFindAndModify: false})
+    } 
+    else if (changeInfo.length === 4) { // Правки для продажи
+      await User.findOneAndUpdate( // обновляем баланс продающего
+        {club: changeInfo[0]}, {$inc: {money: Number(changeInfo[1])}}, {useFindAndModify: false})
+      await User.findOneAndUpdate( // обновляем баланс покупающего
+        {club: changeInfo[2]}, {$inc: {money: -Number(changeInfo[1])}}, {useFindAndModify: false})
+      // меняем клуб у игрока
+      await Squad.findOneAndUpdate({uid: changeInfo[3]}, {club: changeInfo[2], mins: 0}, {useFindAndModify: false})
+    }
+    editMoneyTable(message) // редактируем бюджет в дискорд-канале
+  }
+  
+  // Создание бида на основе результата поиска !search player
+  if (emoji.name == '💷' && !user.bot && message.channel.type === 'dm') {
     let bidmsg = message.content.split('\n')
     sendBid.execute(message, [bidmsg[1].slice(6,-2), bidmsg[2].slice(13,-2), user.id, user.username])
   }

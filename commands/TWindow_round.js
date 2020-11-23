@@ -54,9 +54,6 @@ module.exports = {
 								checkBid = true
 								let coeff1 = myBid.price * (bid.place / 100 + 1) * bid.coeff
 								let coeff2 = bid.price * (myBid.place / 100 + 1) * myBid.coeff
-								// console.log(`${coeff1} = ${coeff2}`)
-								// console.log(`MYBID ${myBid}`)
-								// console.log(`BID ${bid}`)
 								if (coeff1 < coeff2) { 
 									
 									winnerBid = Object.assign(bid, winnerBid)
