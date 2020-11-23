@@ -35,7 +35,6 @@ module.exports = {
 			Bid.find({round: 0}) // Ищем биды, которые еще не были обработаны
 				.then( async (bidList) => { 
 					const bidWinnersList = []
-					const bidLoserList = []
 	 label: for (let i=1; i <= bidList.length; i++) {
 					let myBid = bidList[i-1]
 					let winnerBid = {}
