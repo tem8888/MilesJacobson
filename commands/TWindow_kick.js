@@ -3,8 +3,8 @@ const User = require('../models/User')
 const editMoneyTable = require('../functions/editMoneyTable');
 
 module.exports = {
-	name: 'sell',
-	description: 'Sell squad player',
+	name: 'kick',
+	description: 'Kick squad player',
 	execute(message, args) {
 
   if (args.length !== 1) return message.channel.send(`❌ Ошибка! Принимается только 1 параметр - ID игрока.`)
