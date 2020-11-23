@@ -10,8 +10,15 @@ module.exports = {
 		message.channel.type !== 'dm' ?
 		message.channel.send(`>>> Игрок: **${player.name}**\nID: **${player.uid}**\nСтоимость: **${player.price}**`)
 		:
-		message.channel.send(`>>> Игрок: **${player.name}**\nID: **${player.uid}**\nСтоимость: **${player.price}**\n\n_нажмите на реакцию, чтобы сделать бид_`)
-			.then((msg) => msg.react('💷'))
+		message.channel.send(`>>> Игрок: **${player.name}**\nID: **${player.uid}**\nСтоимость: **${player.price}**\n
+_Нажмите на реакцию, чтобы сделать бид. 
+Каждая реакция соответствует коэффициенту увеличения ставки:  **× 1**   **× 1.1**  **× 1.25**   **× 1.5**_`)
+			.then((msg) => {
+				msg.react('➡️')
+				msg.react('↗️')
+				msg.react('⬆️')
+				msg.react('⏏️')
+			})
 	})
 	
 	}

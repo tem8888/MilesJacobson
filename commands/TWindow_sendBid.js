@@ -19,7 +19,6 @@ module.exports = {
 		let userId = '', username = ''
 		if (message.author.bot) {userId = args[2], username = args[3]} // если бид был сделан через бота, то определяем доп параметры
 
-		console.log(args)
 		Transfer.findOne({uid: playerId}).then((transfer) => {  // Проверка на доступность к трансферу
 				if (!transfer) {
 					return message.channel.send(`❌ Ошибка! Игрока с таким ID в базе нет.`);

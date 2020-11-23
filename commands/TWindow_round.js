@@ -5,6 +5,7 @@ const sendWinnersMessages = require('../functions/sendWinnersMessages')
 const editMoneyTable = require('../functions/editMoneyTable');
 const roundEnd = require('../functions/roundEnd');
 const roundStart = require('../functions/roundStart');
+const Squad = require('../models/Squad');
 
 module.exports = {
 	name: 'round',
@@ -75,11 +76,12 @@ module.exports = {
 					winnerBid = bidList[i-1]
 				}	
 					bidWinnersList.push(winnerBid) // сохраняем победителей в отдельный массив
-			//		console.log(bidWinnersList)
 					await User.findOneAndUpdate( // обновляем баланс клубов в БД
 						{userId: winnerBid.userId}, {$inc: {money: -winnerBid.price, coeff: 1}}, {useFindAndModify: false})
 					await Transfer.findOneAndUpdate(
 						{uid: winnerBid.playerId}, {status: 'finished'}, {upsert: true, useFindAndModify: false})
+					let newSquadPlayer = new Squad({uid: winnerBid.playerId, name: winnerBid.player, club: winnerBid.club})
+					await newSquadPlayer.save()
 				}
 
 				editMoneyTable(message) // Редактируем таблицу с балансами команд

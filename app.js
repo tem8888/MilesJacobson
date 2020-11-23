@@ -101,10 +101,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
     editMoneyTable(message) // редактируем бюджет в дискорд-канале
   }
   
+  if (user.bot && message.channel.type !== 'dm') return 
   // Создание бида на основе результата поиска !search player
-  if (emoji.name == '💷' && !user.bot && message.channel.type === 'dm') {
+  if (emoji.name == '➡️') {
     let bidmsg = message.content.split('\n')
     sendBid.execute(message, [bidmsg[1].slice(6,-2), bidmsg[2].slice(13,-2), user.id, user.username])
+  } else if (emoji.name == '↗️') {
+    let bidmsg = message.content.split('\n')
+    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.1, 2), user.id, user.username])
+  } else if (emoji.name == '⬆️') {
+    let bidmsg = message.content.split('\n')
+    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.25, 2), user.id, user.username])
+  } else if (emoji.name == '⏏️') {
+    let bidmsg = message.content.split('\n')
+    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.5, 2), user.id, user.username])
   }
 })
 
