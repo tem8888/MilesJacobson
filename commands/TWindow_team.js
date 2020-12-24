@@ -6,8 +6,8 @@ module.exports = {
 	description: 'Show team players',
 	execute(message, args) {
 		
-	User.findOne({userId: message.author.id}).then((user) => {
-		if (!user) return message.channel.send(`❌ Ошибка! Доступно только для менеджеров сетевой.`)
+	User.findOne({$or: [{userId: message.author.id}, {assistId: message.author.id}]}).then((user) => {
+		if (!user) return message.channel.send(`❌ Ошибка! Доступно только для участников сетевой.`)
 		
 		Squad.find({club: user.club}).then((playerList) => {
 
@@ -22,7 +22,7 @@ module.exports = {
 
 			message.channel.send({embed:{
 				color: 3553599,
-				title: `_ _               <:mour:771276040504344577> ${user.club}`,
+				title: `_ _               🛡️ ${user.club} 🛡️`,
 				footer: {
       		text: `Всего игроков: ${playerList.length}`
 				},
@@ -38,7 +38,7 @@ module.exports = {
             inline: true
           },
           {
-            name: `Стоимость   _ _`,
+            name: `Стоимость, £ млн   _ _`,
             value: `_ _\n ${prices}`,
             inline: true
           },

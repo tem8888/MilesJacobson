@@ -3,12 +3,8 @@ module.exports = {
 	description: 'Delete last messages',
 	execute(message, args) {
 
-		if (message.member.hasPermission("MANAGE_MESSAGES")) {
-			let amount = args[0] || 10
- 			message.channel.bulkDelete(amount);
-		} else {
-			message.channel.send('Недостаточно прав.')
-		}
+		if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send('❌ Недостаточно прав.')
+		let amount = args[0] || 10
+		message.channel.bulkDelete(amount);
 	}
-
 }

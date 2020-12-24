@@ -10,7 +10,7 @@ module.exports = {
 		if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send(`❌ Недостаточно прав.`);
 		
     Bid.deleteMany({}).then(() => message.channel.send(`✅ Биды удалены.`))
-		User.updateMany({}, {currentRound: 1, nextRound: 1, coeff: 1}).then(() => message.channel.send(`✅ Раунды сброшены.`))
+		User.updateMany({}, {currentRound: 0, nextRound: 1, coeff: 1, isFinished: false}).then(() => message.channel.send(`✅ Раунды сброшены.`))
 		Transfer.updateMany({}, {status: ''}).then(() => null)
 		
 	}

@@ -3,6 +3,10 @@
 const fs = require('fs')
 const Discord = require('discord.js')
 const mongoose = require('mongoose')
+const { DiscordInteractions } = require("slash-commands");
+const { verifyKeyMiddleware, InteractionType, InteractionResponseType } = require("discord-interactions");
+const express = require('express')
+const app = express()
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
 const sendBid = require('./commands/TWindow_sendBid')
@@ -10,8 +14,15 @@ const editMoneyTable = require('./functions/editMoneyTable');
 const User = require('./models/User')
 const Squad = require('./models/Squad')
 require('dotenv').config()
+const appID = "371973105884856331"
 
 const PREFIX = process.env.PREFIX
+
+const interaction = new DiscordInteractions({
+  applicationId: appID,
+  authToken: process.env.BOT_TOKEN,
+  publicKey: "e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac",
+});
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
@@ -23,6 +34,25 @@ for (const file of commandFiles) {
 client.once('ready', async () => { 
 	console.log('Bot is ready!')
   client.user.setActivity('Football Manager 2021'); 
+
+  client.api.applications(appID).guilds("639378002236407809").commands.post({
+    data: {
+        name: "clubs",
+        description: "Список всех участников сетевой"
+    }})
+
+    // Get Guild Commands
+  // await interaction
+  // .getApplicationCommands("639378002236407809")
+  // .then((cmds) => console.log(cmds))
+  // .catch(console.error);
+
+  // Delete Global Command
+  // await interaction
+  // .deleteApplicationCommand("790672222632411206")
+  // .then(console.log('deleted'))
+  // .catch(console.error);
+
   await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -101,25 +131,27 @@ client.on('messageReactionAdd', async (reaction, user) => {
     editMoneyTable(message) // редактируем бюджет в дискорд-канале
   }
   
-  if (user.bot && message.channel.type !== 'dm') return 
+  if (message.channel.type !== 'dm') return 
+  let bidmsg = message.content.split('\n')
+  if (bidmsg.length !== 7) return // Дальнейшие проверки только если реакция была проставлена под результатом поиска
   // Создание бида на основе результата поиска !search player
   if (emoji.name == '➡️') {
-    let bidmsg = message.content.split('\n')
-    sendBid.execute(message, [bidmsg[1].slice(6,-2), bidmsg[2].slice(13,-2), user.id, user.username])
+    sendBid.execute(message, [bidmsg[2].slice(6,-2), bidmsg[3].slice(11,-5), user.id, user.username])
   } else if (emoji.name == '↗️') {
-    let bidmsg = message.content.split('\n')
-    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.1, 2), user.id, user.username])
+    sendBid.execute(message, [bidmsg[2].slice(6,-2), Number(bidmsg[3].slice(11,-2))*1.1, user.id, user.username])
   } else if (emoji.name == '⬆️') {
-    let bidmsg = message.content.split('\n')
-    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.25, 2), user.id, user.username])
-  } else if (emoji.name == '⏏️') {
-    let bidmsg = message.content.split('\n')
-    sendBid.execute(message, [bidmsg[1].slice(6,-2), Math.round(Number(bidmsg[2].slice(13,-2))*1.5, 2), user.id, user.username])
+    sendBid.execute(message, [bidmsg[2].slice(6,-2), Number(bidmsg[3].slice(11,-2))*1.25, user.id, user.username])
+  } else if (emoji.name == '⏫') {
+    sendBid.execute(message, [bidmsg[2].slice(6,-2), Number(bidmsg[3].slice(11,-2))*1.5, user.id, user.username])
+  } else if (emoji.name == '🆙') {
+    sendBid.execute(message, [bidmsg[2].slice(6,-2), Number(bidmsg[3].slice(11,-2))*2, user.id, user.username])
   }
 })
 
 client.on('message', message => {
-	if (!message.content.startsWith(PREFIX) || message.author.bot) return
+  if (!message.content.startsWith(PREFIX) || message.author.bot) return
+  
+  message.channel.send(clubs)
 
   const args = message.content.slice(PREFIX.length).trim().split(/\n+| +/)
   const commandName = args.shift().toLowerCase()
@@ -135,5 +167,64 @@ client.on('message', message => {
 	}
 
 });
+let club = [];
+club['forest'] = client.emojis.cache.get("787418118027739137");
+club['ipswich'] = client.emojis.cache.get("787421399714365470");
+club['sunderl'] = client.emojis.cache.get("787447964079489064");
+club['cork'] = client.emojis.cache.get("787462185625845790");
+club['portsm'] = client.emojis.cache.get("787772178732154910");
+club['swindon'] = client.emojis.cache.get("787780499900727346");
+club['oxford'] = client.emojis.cache.get("787800122251149392");
+club['partick'] = client.emojis.cache.get("788121883371372594");
+club['blackb'] = client.emojis.cache.get("788128062763958352");
+club['blackp'] = client.emojis.cache.get("788132421844467723");
+club['kilmar'] = client.emojis.cache.get("788401253205278741");
+club['sheff'] = client.emojis.cache.get("788406878715117608");
+club['dundu'] = client.emojis.cache.get("788434818437218326");
+club['boro'] = client.emojis.cache.get("788434937618497536");
+club['dundee'] = client.emojis.cache.get("788439059604439070");
+club['charl'] = client.emojis.cache.get("788449223796195379");
+club['crewe'] = client.emojis.cache.get("788453149249110058");
+club['nomad'] = client.emojis.cache.get("788459617897414656");
+
+const clubsEmbed = new Discord.MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('Клубы и участники сетевой')
+	.setURL('https://discord.js.org/')
+	.setAuthor('СЕТЕВАЯ БРИТАНИЯ 2021', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
+  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+  .addFields(
+		{ name: 'Клуб', value: `${club['blackb']} Blackburn\n${club['blackp']} Blackpool\n${club['charl']} Charlton\n${club['cork']} Cork\n${club['crewe']} Crewe\n${club['dundee']} Dundee\n${club['dundu']} Dundee United\n${club['ipswich']} Ipswich\n${club['kilmar']} Kilmarnock\n${club['boro']} Middlesbrough\n${club['nomad']} Nomads Quey\n${club['forest']} Nottingham Forest\u00A0\u00A0\u00A0\n${club['oxford']} Oxford United\n${club['partick']} Partick Thistle\n${club['portsm']} Portsmouth\n${club['sheff']} Sheffield Wed\n${club['sunderl']} Sunderland\n${club['swindon']} Swindon Town`, inline: true },
+		{ name: 'Менеджер [ассистент]', value: ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: Роман\n:scotland: tem\n:scotland: Criomar\n:england: plasteelin [E6ison]\n:scotland: Dragovic1982\n:england: Igor\n:wales: piggy [Ilya]\n:england: Arisen\n:england: Alxun\n:scotland: Karsoris [Ez]\n:england: AstraDelic\n:england: sashanik\n:england: YurDav\n:england: SMS', inline: true },
+	)
+
+client.ws.on('INTERACTION_CREATE', async interaction => {
+
+  // app.post('/interactions', verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
+  //   const message = req.body;
+  //   console.log(message)
+  //   console.log(message.type)
+  //   if (message.type === InteractionType.COMMAND) {
+  //     console.log('WORK')
+  //     res.send({
+  //       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  //       data: {
+  //         content: clubs,
+  //       },
+  //     });
+  //   }
+  // });
+  // console.log(interaction)
+  // console.log(interaction.data.options[0].value)
+ // if (command === 'clubs') {
+    client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+      type: 4,
+      data: {
+        content: "",
+        embeds: [clubsEmbed]
+        }
+    }})
+ // }
+})
 
 client.login(process.env.BOT_TOKEN);

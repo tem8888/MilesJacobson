@@ -27,20 +27,22 @@ module.exports = {
 				} else if (Number(transfer.price) > price) { 
 					return message.channel.send(`❌ Ошибка! Минимальная цена за ${transfer.name} составляет ${transfer.price}.`)
 				} else {
-					User.findOne({userId: !userId ? message.author.id : userId}) // Если игрок не был продан и такой ID существует, то принимаем бид
+					User.findOne({$or: [		 // Если игрок не был продан и такой ID существует, то принимаем бид
+						{userId: !userId ? message.author.id : checkAss = userId}, 
+						{assistId: !userId ? message.author.id : checkAss = userId}]})
 						.then((user) => {
-							if (!user) return // только для участников сетевой
-							if (price > user.money) return message.channel.send(`❌ Ошибка! У вас недостаточно средств. Баланс: ${user.money}`);
+							if (!user) return message.channel.send(`❌ Ошибка! Только для участников сетевой.`); // только для участников сетевой
 							if (user.currentRound > user.nextRound) return message.channel.send(`❌ Ошибка! Вы уже сделали бид в этом раунде.`);
 							if (user.currentRound < user.nextRound) return message.channel.send(`❌ Ошибка! Следующий раунд еще не начался.`);
+							if (price > user.money) return message.channel.send(`❌ Ошибка! У вас недостаточно средств. Баланс: ${user.money}`);
 
 							message.client.channels.cache.get(process.env.BID_SEND_CHANNEL)
-								.send(`> Бид от **${username ? message.author.tag : username}**! Игрок:**${transfer.name}** (id: ${playerId}). Price: **${price}**`);		
+								.send(`> Бид от **${!username ? message.author.tag : username}** (${user.club}). Игрок: **${transfer.name}** (id: ${playerId}). Ставка: £**${price}**млн`);		
 
 							let bidData = new Bid({userId: user.userId, club: user.club, place: user.place, coeff: user.coeff, playerId: playerId, player: transfer.name, price: Number(price)})
 							bidData.save((err, bid) => {
 								if (err) return console.error(err);
-								message.channel.send(`✅ Бид на игрока **${bid.player}** (id: ${bid.playerId}) принят! Возможная сумма трансфера: ${bid.price}`);
+								message.channel.send(`✅ Бид на игрока **${bid.player}** (id: ${bid.playerId}) принят! Возможная сумма трансфера: £**${bid.price}**млн. Ожидайте конца раунда.`);
 								User.updateOne({userId: bid.userId}, {$inc: {currentRound: 1}}).then(() => null)
 							})
 						}).catch((err) => {console.log(err)})

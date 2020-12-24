@@ -5,10 +5,13 @@
   "main": "app.js",
   "dependencies": {
     "axios": "^0.21.0",
+    "discord-interactions": "^1.4.1",
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.12.1",
-    "mongoose": "^5.10.15"
+    "express": "^4.17.1",
+    "mongoose": "^5.10.15",
+    "slash-commands": "^1.2.2"
   },
   "devDependencies": {},
   "scripts": {

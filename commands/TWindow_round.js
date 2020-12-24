@@ -22,12 +22,15 @@ module.exports = {
 		} 
 		if (args[1] === 'check') {
 			let msgContent = ''
-			User.find({currentRound: round})
+			User.find({$or: [{currentRound: round, isFinished: false}]})
 				.then((users) => {
 					for (user of users) {
 						msgContent += `🦥 ${user.username}\n`
 					}
 					message.channel.send(`Кто еще не сделал бид?\n\n${msgContent}`);
+				})
+				.catch(() => {
+					message.channel.send(`Все сделали биды, молодцы!`);
 				})
 		} 
 		else if (args[1] === 'end') {
@@ -77,7 +80,7 @@ module.exports = {
 				}	
 					bidWinnersList.push(winnerBid) // сохраняем победителей в отдельный массив
 					await User.findOneAndUpdate( // обновляем баланс клубов в БД
-						{userId: winnerBid.userId}, {$inc: {money: -winnerBid.price, coeff: 1}}, {useFindAndModify: false})
+						{userId: winnerBid.userId}, {$inc: {money: -Number(Math.round(winnerBid.price+'e2')+'e-2'), coeff: 0.5}}, {useFindAndModify: false})
 					await Transfer.findOneAndUpdate(
 						{uid: winnerBid.playerId}, {status: 'finished'}, {upsert: true, useFindAndModify: false})
 					let newSquadPlayer = new Squad({uid: winnerBid.playerId, name: winnerBid.player, club: winnerBid.club})

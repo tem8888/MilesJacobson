@@ -3,7 +3,7 @@ const sendWinnersMessages = (bidWinnersList, message) => {
     let interval = setInterval (async function () {
       message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL).send({embed:{
         color: 3553599,
-        description: `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: **${bidWinnersList[bidCount].price}**`,
+        description: `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: **${bidWinnersList[bidCount].price}**млн`,
       }});
       bidCount += 1
     }, 2000); 

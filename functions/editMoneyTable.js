@@ -27,13 +27,13 @@ const editMoneyTable = (message) => {
             inline: true
           },
           {
-            name: `💰 Бюджет   _ _`,
+            name: `💷 Бюджет, млн   _ _`,
             value: `_ _\n_ _  ${money}`,
             inline: true
           },
         ],
       }}
-
+      
       if (statsMessageTable) {
         await statsMessageTable.edit(embedMsg)
       } else {
