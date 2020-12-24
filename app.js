@@ -42,10 +42,10 @@ client.once('ready', async () => {
     }})
 
   //  Get Guild Commands
-  // await interaction
-  // .getApplicationCommands(guildID)
-  // .then((cmds) => console.log(cmds))
-  // .catch(console.error);
+  await interaction
+  .getApplicationCommands(guildID)
+  .then((cmds) => console.log(cmds))
+  .catch(console.error);
 
   // Delete Global Command
   // await interaction
