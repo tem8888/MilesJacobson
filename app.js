@@ -34,11 +34,11 @@ client.once('ready', async () => {
 	console.log('Bot is ready!')
   client.user.setActivity('Football Manager 2021'); 
 
-  // client.api.applications(appID).guilds("370889338214678533").commands.post({
-  //   data: {
-  //       name: "Клубы",
-  //       description: "Список всех участников сетевой"
-  //   }})
+  client.api.applications(appID).guilds("370889338214678533").commands.post({
+    data: {
+        name: "Клубы",
+        description: "Список всех участников сетевой"
+    }})
 
     // Get Guild Commands
   // await interaction
