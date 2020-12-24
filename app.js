@@ -4,7 +4,7 @@ const fs = require('fs')
 const Discord = require('discord.js')
 const mongoose = require('mongoose')
 const { DiscordInteractions } = require("slash-commands");
-//const { verifyKeyMiddleware, InteractionType, InteractionResponseType } = require("discord-interactions");
+const { verifyKeyMiddleware, InteractionType, InteractionResponseType } = require("discord-interactions");
 const express = require('express')
 const app = express()
 const client = new Discord.Client()
@@ -16,6 +16,7 @@ const Squad = require('./models/Squad')
 require('dotenv').config()
 const appID = process.env.CLIENT_ID
 const PREFIX = process.env.PREFIX
+const guildID = process.env.GUILD_ID
 
 const interaction = new DiscordInteractions({
   applicationId: appID,
@@ -34,15 +35,15 @@ client.once('ready', async () => {
 	console.log('Bot is ready!')
   client.user.setActivity('Football Manager 2021'); 
 
-  client.api.applications(appID).guilds("370889338214678533").commands.post({
+  client.api.applications(appID).guilds(guildID).commands.post({
     data: {
-        name: "Клубы",
+        name: "clubs",
         description: "Список всех участников сетевой"
     }})
 
-    // Get Guild Commands
+  //  Get Guild Commands
   // await interaction
-  // .getApplicationCommands("639378002236407809")
+  // .getApplicationCommands(guildID)
   // .then((cmds) => console.log(cmds))
   // .catch(console.error);
 
@@ -198,34 +199,34 @@ const clubsEmbed = new Discord.MessageEmbed()
 	)
 
 client.ws.on('INTERACTION_CREATE', async interaction => {
-  console.log(interaction)
-  app.post(`/applications/${appID}/commands`, verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
-    const message = req.body;
-    console.log(res)
-    console.log(message.type)
+   console.log(interaction)
+  // app.post(`/applications/${appID}/commands`, verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
+  //   const message = req.body;
+    
+  //   console.log(message.type)
   //  console.log(InteractionType.COMMAND)
-    // if (message.type === InteractionType.COMMAND) {
-    //   console.log('WORK')
-    //   res.send({
-    //     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    //     data: {
-    //       content: clubs,
-    //       embeds: [clubsEmbed]
-    //     },
-    //   });
-    // }
-  });
+  //   if (message.type === InteractionType.COMMAND) {
+  //     console.log('WORK')
+  //     res.send({
+  //       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+  //       data: {
+  //         content: clubs,
+  //         embeds: [clubsEmbed]
+  //       },
+  //     });
+  //   }
+  // });
   // console.log(interaction)
   // console.log(interaction.data.options[0].value)
- // if (command === 'clubs') {
-    // client.api.interactions(interaction.id, interaction.token).callback.post({data: {
-    //   type: 4,
-    //   data: {
-    //     content: "",
-    //     embeds: [clubsEmbed]
-    //     }
-    // }})
- // }
+ if (interaction.data.name === 'clubs') {
+    client.api.interactions(interaction.id, interaction.token).callback.post({data: {
+      type: 4,
+      data: {
+        content: "",
+        embeds: [clubsEmbed]
+        }
+    }})
+ }
 })
 
 client.login(process.env.BOT_TOKEN);
