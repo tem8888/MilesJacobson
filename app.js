@@ -42,16 +42,16 @@ client.once('ready', async () => {
     }})
 
   //  Get Guild Commands
-  await interaction
-  .getApplicationCommands(guildID)
-  .then((cmds) => console.log(cmds))
-  .catch(console.error);
+  // await interaction
+  // .getApplicationCommands(guildID)
+  // .then((cmds) => console.log(cmds))
+  // .catch(console.error);
 
   // Delete Global Command
-  // await interaction
-  // .deleteApplicationCommand("790672222632411206")
-  // .then(console.log('deleted'))
-  // .catch(console.error);
+  await interaction
+  .deleteApplicationCommand("791741531459289128")
+  .then(console.log('deleted'))
+  .catch(console.error);
 
   await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
