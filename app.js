@@ -41,17 +41,14 @@ client.once('ready', async () => {
         description: "Список всех участников сетевой"
     }})
 
-  //  Get Guild Commands
-  await interaction
-  .getApplicationCommands(guildID)
-  .then((cmds) => console.log(cmds))
-  .catch(console.error);
 
- // Delete Global Command
-  await interaction
-  .deleteApplicationCommand("791741531459289128")
-  .then(console.log('deleted'))
-  .catch(console.error);
+  client.api.applications(appID).commands('791741531459289128').delete().then(() => console.log("deleted command"))
+
+  //  Get Guild Commands
+  // await interaction
+  // .getApplicationCommands(guildID)
+  // .then((cmds) => console.log(cmds))
+  // .catch(console.error);
 
   await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -150,8 +147,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
 client.on('message', message => {
   if (!message.content.startsWith(PREFIX) || message.author.bot) return
-  
-  message.channel.send("")
 
   const args = message.content.slice(PREFIX.length).trim().split(/\n+| +/)
   const commandName = args.shift().toLowerCase()
