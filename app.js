@@ -41,8 +41,9 @@ client.once('ready', async () => {
         description: "Список всех участников сетевой"
     }})
 
- // client.api.applications(appID).guilds(guildID).commands.get().then((cmds) => console.log(cmds))
-  client.api.applications(appID).guilds(guildID).commands("791741531459289128").delete().then(() => console.log("deleted"))
+  client.api.applications(appID).guilds(guildID).commands.get().then((cmds) => console.log(cmds))
+ // client.api.applications(appID).guilds(guildID).commands("791741531459289128").delete().then(() => console.log("deleted"))
+ //client.api.applications(appID).guilds(guildID).commands("792215262636015637").delete().then(() => console.log("deleted"))
 
   //  Get Guild Commands
   // await interaction
