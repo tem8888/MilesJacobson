@@ -22,7 +22,7 @@ module.exports = {
         let addPrice2 = args[4]
         let club = player2.club
         message.client.channels.cache.get(process.env.TRANSFERS_CHANNEL)
-          .send(`>>> _ _\n 🔄 Обмен между клубами.\n **${player1.name}** c доплатой [${addPrice1}] ➡️ **[${club}]**. [${player1.uid}]\n **${player2.name}** с доплатой [${addPrice2}] ➡️ **[${user.club}]**. [${player2.uid}]\n_ _`)
+          .send(`>>> _ _\n 🔄 Обмен между клубами.\n **${player1.name}** c доплатой £[${addPrice1}]млн ➡️ **[${club}]**. [${player1.uid}]\n **${player2.name}** с доплатой £[${addPrice2}]млн ➡️ **[${user.club}]**. [${player2.uid}]\n_ _`)
 
         message.channel.send(`✅ Заявка на обмен отправлена.`)
 
@@ -41,7 +41,7 @@ module.exports = {
         let club = player.club
 
         message.client.channels.cache.get(process.env.TRANSFERS_CHANNEL)
-          .send(`>>> _ _\n 🔂 Трансфер между клубами.\n **${player.name}** [${club}] за [${addPrice1}] монет ➡️ **[${user.club}]**. [${player.uid}]\n_ _`)
+          .send(`>>> _ _\n 🔂 Трансфер между клубами.\n **${player.name}** [${club}] за £[${addPrice1}]млн ➡️ **[${user.club}]**. [${player.uid}]\n_ _`)
 
         message.channel.send(`✅ Заявка на трансфер отправлена.`)
 
@@ -60,8 +60,8 @@ module.exports = {
         if (!player) return message.channel.send(`❌ Ошибка! Игрок для трансфера не найден.`)
         let addPrice1 = args[2]
 
-        message.client.channels.cache.get(process.env.TRANSFERS_CHANNEL)
-          .send(`>>> _ _\n 🔂 Трансфер между клубами.\n **${player.name}** [${user1.club}] за [${addPrice1}] монет ➡️ **[${club}]**. [${player.uid}]\n_ _`)
+        message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL)
+          .send(`>>> _ _\n 🔂 Трансфер между клубами.\n **${player.name}** [${user1.club}] за £[${addPrice1}]млн ➡️ **[${club}]**. [${player.uid}]\n_ _`)
 
         message.channel.send(`✅ Заявка на трансфер отправлена.`)
 
