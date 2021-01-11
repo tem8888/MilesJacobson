@@ -21,7 +21,7 @@ module.exports = {
       //   if (playerList.length <= 18) return message.channel.send(`❌ Ошибка! В команде не может быть менее 18 игроков`)
       // })
 
-      User.updateOne({userId: message.author.id}, {$inc: {money: player.price}}).then(() => {
+      User.updateOne({$or: [{userId: message.author.id}, {assistId: message.author.id}]}, {$inc: {money: player.price}}).then(() => {
 
         message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL)
         .send(`✅ Игрок **${player.name}** отчислен из клуба ${user.club}. Получено £**${player.price}** млн.`)
