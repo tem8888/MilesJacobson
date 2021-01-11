@@ -6,7 +6,7 @@ module.exports = {
 		if (message.member.hasPermission("MANAGE_MESSAGES")) {
 			message.channel.send(`> <@&${process.env.ONLINE_ROLE}> 📢 ЗАХОДИМ ➡️ Сервер - Britannia Network, пароль - 2022, Регион - Russian Moscow`);
      let interval = setInterval (function () {
-        message.channel.send(`> <@&${process.env.ONLINE_ROLE}> 📢 ЗАХОДИМ ➡️ Сервер - Britannia Network, пароль - 2020.`)
+        message.channel.send(`> <@&${process.env.ONLINE_ROLE}> 📢 ЗАХОДИМ ➡️ Сервер - Britannia Network, пароль - 2022.`)
       }, 3000); 
     	setTimeout (function () {
       	clearInterval(interval);
