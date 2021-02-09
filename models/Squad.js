@@ -5,6 +5,7 @@ const schema = new Schema({
   uid: { type: String, required: true },
   name: { type: String },
   value: { type: Number, default: 0 },
+  status: { type: String },
 })
 
 module.exports = model('Squad', schema)

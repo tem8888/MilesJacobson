@@ -196,28 +196,28 @@ client.on('messageReactionAdd', async (reaction, user) => {
   } else if (emoji.name == '↗️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(bidmsg[3].slice(11, -2)) * 1.1,
+      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.1 + 'e+2' - 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⬆️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(bidmsg[3].slice(11, -2)) * 1.25,
+      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.25 + 'e+2' - 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⏫') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(bidmsg[3].slice(11, -2)) * 1.5,
+      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.5 + 'e+2' - 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '🆙') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(bidmsg[3].slice(11, -2)) * 2,
+      Math.round(Number(bidmsg[3].slice(11, -5)) * 2 + 'e+2' - 'e-2'),
       user.id,
       user.username,
     ])
