@@ -17,9 +17,16 @@ module.exports = {
           return message.channel.send(
             '❌ Ошибка! Для завершения ТО у вас должно быть не менее 18 игроков в составе.'
           )
-        User.findOneAndUpdate({
-          $or: [{ userId: message.author.id }, { assistId: message.author.id }],
-        }).then(() => {
+        User.findOneAndUpdate(
+          {
+            $or: [
+              { userId: message.author.id },
+              { assistId: message.author.id },
+            ],
+          },
+          { isFinished: true },
+          { useFindAndModify: false }
+        ).then(() => {
           message.channel.send(
             '✅ Клуб ${user.club} завершил трансферное окно.'
           )

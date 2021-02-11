@@ -17,7 +17,7 @@ module.exports = {
       !message.author.bot
     )
       return message.channel.send(
-        `❌ Ошибка! Неправильная запись цены за игрока.`
+        '❌ Ошибка! Неправильная запись цены за игрока. Разделитель дробной части - точка ` . `'
       )
 
     let playerId = args[0]

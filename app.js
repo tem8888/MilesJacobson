@@ -41,21 +41,21 @@ client.once('ready', async () => {
   console.log('Bot is ready!')
   client.user.setActivity('Cyberpunk 2077')
 
-  client.api
-    .applications(appID)
-    .guilds(guildID)
-    .commands.post({
-      data: {
-        name: 'clubs',
-        description: 'Список всех участников сетевой',
-      },
-    })
+  // client.api
+  //   .applications(appID)
+  //   .guilds(guildID)
+  //   .commands.post({
+  //     data: {
+  //       name: 'clubs',
+  //       description: 'Список всех участников сетевой',
+  //     },
+  //   })
 
-  client.api
-    .applications(appID)
-    .guilds(guildID)
-    .commands.get()
-    .then((cmds) => console.log(cmds))
+  // client.api
+  //   .applications(appID)
+  //   .guilds(guildID)
+  //   .commands.get()
+  //   .then((cmds) => console.log(cmds))
   // client.api.applications(appID).guilds(guildID).commands("791741531459289128").delete().then(() => console.log("deleted"))
   //client.api.applications(appID).guilds(guildID).commands("792215262636015637").delete().then(() => console.log("deleted"))
 
@@ -285,37 +285,37 @@ const clubsEmbed = new Discord.MessageEmbed()
     }
   )
 
-client.ws.on('INTERACTION_CREATE', async (interaction) => {
-  console.log(interaction)
-  // app.post(`/applications/${appID}/commands`, verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
-  //   const message = req.body;
+//client.ws.on('INTERACTION_CREATE', async (interaction) => {
+//console.log(interaction)
+// app.post(`/applications/${appID}/commands`, verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
+//   const message = req.body;
 
-  //   console.log(message.type)
-  //  console.log(InteractionType.COMMAND)
-  //   if (message.type === InteractionType.COMMAND) {
-  //     console.log('WORK')
-  //     res.send({
-  //       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-  //       data: {
-  //         content: clubs,
-  //         embeds: [clubsEmbed]
-  //       },
-  //     });
-  //   }
-  // });
-  // console.log(interaction)
-  // console.log(interaction.data.options[0].value)
-  if (interaction.data.name === 'clubs') {
-    client.api.interactions(interaction.id, interaction.token).callback.post({
-      data: {
-        type: 4,
-        data: {
-          content: '',
-          embeds: [clubsEmbed],
-        },
-      },
-    })
-  }
-})
+//   console.log(message.type)
+//  console.log(InteractionType.COMMAND)
+//   if (message.type === InteractionType.COMMAND) {
+//     console.log('WORK')
+//     res.send({
+//       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+//       data: {
+//         content: clubs,
+//         embeds: [clubsEmbed]
+//       },
+//     });
+//   }
+// });
+// console.log(interaction)
+// console.log(interaction.data.options[0].value)
+// if (interaction.data.name === 'clubs') {
+//   client.api.interactions(interaction.id, interaction.token).callback.post({
+//     data: {
+//       type: 4,
+//       data: {
+//         content: '',
+//         embeds: [clubsEmbed],
+//       },
+//     },
+//   })
+// }
+//})
 
 client.login(process.env.BOT_TOKEN)
