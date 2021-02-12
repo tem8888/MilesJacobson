@@ -6,26 +6,27 @@ module.exports = {
   name: 'bid',
   description: 'Send Bid in specific channel',
   execute(message, args) {
+
     if (message.channel.type !== 'dm') return
     if (args.length !== 2 && !message.author.bot)
       return message.channel.send(
         `❌ Ошибка! Запись должна содержать 2 аргумента (**уникальный номер игрока**, **цена**)!`
       )
-    if (
-      (!Number.isInteger(Number(args[args.length - 1])) ||
-        Number(args[args.length - 1]) < 0) &&
-      !message.author.bot
-    )
+
+    if ((isNaN(Number(args[args.length-1])) || Number(args[args.length-1]) < 0) && !message.author.bot) {
       return message.channel.send(
         '❌ Ошибка! Неправильная запись цены за игрока. Разделитель дробной части - точка ` . `'
       )
+    }
+      
 
     let playerId = args[0]
     let price = args[1]
-    let userId = '',
-      username = ''
+    let userId = ''
+    let username = ''
     if (message.author.bot) {
-      ;(userId = args[2]), (username = args[3])
+      userId = args[2]
+      username = args[3]
     } // если бид был сделан через бота, то определяем доп параметры
 
     Transfer.findOne({ uid: playerId }).then((transfer) => {

@@ -42,37 +42,44 @@ module.exports = {
           label: for (let i = 1; i <= bidList.length; i++) {
             let myBid = bidList[i - 1]
             let winnerBid = {}
-            winnerBid.losers = []
+            let losers = []
             let checkBid = false // Проверка, что на игрока были другие биды
 
             for (bid of bidWinnersList) {
-              // Проверка на повторение
+              // Проверка на повторение. Если этот игрок уже есть в списке забранных, то пропускаем его и берем новый бид.
               if (bid.playerId === myBid.playerId) {
                 continue label
               }
             }
 
             if (i < bidList.length) {
+              // Перебираем биды из оставшегося массива
               for (bid of bidList.slice(i)) {
+
                 if (myBid.playerId === bid.playerId) {
                   // Если нашлось пересечение по игроку
                   checkBid = true
-                  let coeff1 = myBid.price * (bid.place / 100 + 1) * bid.coeff
-                  let coeff2 = bid.price * (myBid.place / 100 + 1) * myBid.coeff
+                  // let coeff1 = myBid.price * (bid.place / 100 + 1) * bid.coeff
+                  // let coeff2 = bid.price * (myBid.place / 100 + 1) * myBid.coeff
+                  let coeff1 = myBid.price * bid.coeff
+                  let coeff2 =  bid.price * myBid.coeff
+
                   if (coeff1 < coeff2) {
                     winnerBid = Object.assign(bid, winnerBid)
-                    winnerBid.losers.push({
-                      club: myBid.club,
-                      price: myBid.price,
-                      editPrice: myBid.price * bid.coeff,
-                    })
+                    myBid = bid
+                    // losers.push({
+                    //   club: myBid.club,
+                    //   price: myBid.price,
+                    //   editPrice: myBid.price * bid.coeff,
+                    // })
+                    
                   } else if (coeff1 > coeff2) {
                     winnerBid = Object.assign(myBid, winnerBid)
-                    winnerBid.losers.push({
-                      club: bid.club,
-                      price: bid.price,
-                      editPrice: bid.price * myBid.coeff,
-                    })
+                    // losers.push({
+                    //   club: bid.club,
+                    //   price: bid.price,
+                    //   editPrice: bid.price * myBid.coeff,
+                    // })
                   } else {
                     // Если случилась ничья, определяем победителя по занятой позиции
                     myBid.place > bid.place
@@ -94,11 +101,12 @@ module.exports = {
               {
                 $inc: {
                   money: -Number(Math.round(winnerBid.price + 'e2') + 'e-2'),
-                  coeff: 0.25,
+                  coeff: 0.2
                 },
               },
               { useFindAndModify: false }
             )
+            
             await Transfer.findOneAndUpdate(
               { uid: winnerBid.playerId },
               { status: 'finished' },
