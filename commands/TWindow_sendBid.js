@@ -18,6 +18,11 @@ module.exports = {
         '❌ Ошибка! Неправильная запись цены за игрока. Разделитель дробной части - точка ` . `'
       )
     }
+    let fractNum = args[args.length-1].split('.')
+    if (fractNum[fractNum.length - 1].length > 2) {
+      return message.channel.send(
+      '❌ Ошибка! Допускается только 2 знака после запятой (точки)'
+    )}
       
 
     let playerId = args[0]
