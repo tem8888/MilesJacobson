@@ -31,11 +31,8 @@ module.exports = {
           )
         if (player.status === 'new')
           return message.channel.send(
-            `❌ Ошибка! Нового игрока нельзя отчислить в этом же сезоне.`
+            `❌ Ошибка! ${player.name} нельзя отчислить в этом сезоне.`
           )
-        // Squad.find({club: user.club}).then((playerList) => {
-        //   if (playerList.length <= 18) return message.channel.send(`❌ Ошибка! В команде не может быть менее 18 игроков`)
-        // })
 
         User.updateOne(
           {
