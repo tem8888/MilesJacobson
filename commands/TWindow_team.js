@@ -15,38 +15,18 @@ module.exports = {
 
       Squad.find({ club: user.club }).then((playerList) => {
         let players = ''
-        let ids = ''
-        let values = ''
-        for (player of playerList) {
-          players += `**${player.name}**\n`
-          ids += `${player.uid}\n`
-          values += `**${player.value}**\n`
-        }
 
+        for (player of playerList) {
+          players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+        }
         message.channel.send({
           embed: {
             color: 3553599,
-            title: `_ _               🛡️ ${user.club} _ _ _ _ _ _ 💰 ${user.money} £ млн`,
+            title: `_ _          🛡️ ${user.club} _ _ _ _ _ _ 💰 ${user.money} £ млн`,
             footer: {
               text: `Всего игроков: ${playerList.length}`,
             },
-            fields: [
-              {
-                name: `_ _ Игрок`,
-                value: `_ _\n_ _  ${players}`,
-                inline: true,
-              },
-              {
-                name: `_ _ ID`,
-                value: `_ _\n_ _ ${ids}`,
-                inline: true,
-              },
-              {
-                name: `Стоимость, £ млн   _ _`,
-                value: `_ _\n ${values}`,
-                inline: true,
-              },
-            ],
+            description: `_ _        Игрок        ━        ID        ━        Стоимость, млн\n \n ${players}`,
           },
         })
       })
