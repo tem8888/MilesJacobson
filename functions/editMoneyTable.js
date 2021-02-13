@@ -10,7 +10,7 @@ const editMoneyTable = (message) => {
       for (user of userList) {
         clubs += `**${user.club}**\n▔▔▔▔▔▔▔▔\n`
         users += `**${user.username}**\n▔▔▔▔▔▔▔▔\n`
-        money += `**${user.money}**\n▔▔▔▔\n`
+        money += `**${+user.money.toFixed(2)}**\n▔▔▔▔\n`
       }
 
       let embedMsg = {embed:{
