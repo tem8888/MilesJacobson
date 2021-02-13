@@ -43,6 +43,7 @@ module.exports = {
           },
           { $inc: { money: player.value } }
         ).then(() => {
+          message.channel.send(`${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`)
           message.client.channels.cache
             .get(process.env.BID_CONFIRM_CHANNEL)
             .send(
