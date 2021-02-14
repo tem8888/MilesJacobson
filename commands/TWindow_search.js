@@ -19,7 +19,7 @@ module.exports = {
             }**\nCA: **${player.ca}**, PA: **${player.pa}**\nID: **${
               player.uid
             }**\nPrice: £ **${player.price}**млн\n
-_Поставьте реакцию, чтобы сделать бид. 
+Поставьте реакцию, чтобы сделать бид. 
 Каждая реакция соответствует коэффициенту увеличения ставки:\n
   ➡️ **× 1** = ${player.price},   ↗️ **× 1.05** = ${Number(
               Math.round(player.price * 1.05 + 'e2') + 'e-2'
