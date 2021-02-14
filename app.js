@@ -184,7 +184,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
   if (message.channel.type !== 'dm') return
   let bidmsg = message.content.split('\n')
-  if (bidmsg.length !== 7) return // Дальнейшие проверки только если реакция была проставлена под результатом поиска
+  if (bidmsg.length !== 9) return // Дальнейшие проверки только если реакция была проставлена под результатом поиска
   // Создание бида на основе результата поиска !search player
   if (emoji.name == '➡️') {
     sendBid.execute(message, [
@@ -196,28 +196,28 @@ client.on('messageReactionAdd', async (reaction, user) => {
   } else if (emoji.name == '↗️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.1 + 'e+2' - 'e-2'),
+      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.05) + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⬆️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.25 + 'e+2' - 'e-2'),
+      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.1) + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⏫') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Math.round(Number(bidmsg[3].slice(11, -5)) * 1.5 + 'e+2' - 'e-2'),
+      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.2) + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '🆙') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Math.round(Number(bidmsg[3].slice(11, -5)) * 2 + 'e+2' - 'e-2'),
+      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.4) + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])

@@ -6,7 +6,7 @@ module.exports = {
   name: 'bid',
   description: 'Send Bid in specific channel',
   execute(message, args) {
-
+console.log(args)
     if (message.channel.type !== 'dm') return
     if (args.length !== 2 && !message.author.bot)
       return message.channel.send(
@@ -18,12 +18,14 @@ module.exports = {
         '❌ Ошибка! Неправильная запись цены за игрока. Разделитель дробной части - точка ` . `'
       )
     }
-    let fractNum = args[args.length-1].split('.')
-    if (fractNum[fractNum.length - 1].length > 2) {
-      return message.channel.send(
-      '❌ Ошибка! Допускается только 2 знака после запятой (точки)'
-    )}
-      
+    
+    if (!message.author.bot) {
+      let fractNum = args[args.length-1].split('.')
+      console.log(fractNum)
+      if (fractNum[fractNum.length - 1].length > 2) {
+        return message.channel.send('❌ Ошибка! Допускается только 2 знака после запятой (точки)')
+      }
+    }
 
     let playerId = args[0]
     let price = args[1]

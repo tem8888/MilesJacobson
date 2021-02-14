@@ -25,10 +25,10 @@ _Поставьте реакцию, чтобы сделать бид.
               Math.round(player.price * 1.05 + 'e2') + 'e-2'
             )},   ⬆️ **× 1.1** = ${Number(
               Math.round(player.price * 1.1 + 'e2') + 'e-2'
-            )},   ⏫ **× 1.25** = ${Number(
-              Math.round(player.price * 1.25 + 'e2') + 'e-2'
-            )},   🆙 **× 1.5** = ${Number(
-              Math.round(player.price * 1.5 + 'e2') + 'e-2'
+            )},   ⏫ **× 1.2** = ${Number(
+              Math.round(player.price * 1.2 + 'e2') + 'e-2'
+            )},   🆙 **× 1.4** = ${Number(
+              Math.round(player.price * 1.4 + 'e2') + 'e-2'
             )}`)
       }
     )
