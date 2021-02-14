@@ -6,7 +6,7 @@ module.exports = {
   name: 'bid',
   description: 'Send Bid in specific channel',
   execute(message, args) {
-console.log(args)
+
     if (message.channel.type !== 'dm') return
     if (args.length !== 2 && !message.author.bot)
       return message.channel.send(
@@ -21,7 +21,6 @@ console.log(args)
     
     if (!message.author.bot) {
       let fractNum = args[args.length-1].split('.')
-      console.log(fractNum)
       if (fractNum[fractNum.length - 1].length > 2) {
         return message.channel.send('❌ Ошибка! Допускается только 2 знака после запятой (точки)')
       }
