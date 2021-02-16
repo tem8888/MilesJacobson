@@ -45,7 +45,12 @@ module.exports = {
               { assistId: message.author.id },
             ],
           },
-          { $inc: { money: Number(Math.round(player.value + 'e2') + 'e-2') } }
+          { 
+            $inc: { 
+              money: Number(Math.round(player.value + 'e2') + 'e-2'),
+              players: -1  
+            } 
+          } 
         ).then(() => {
           message.channel.send(`${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`)
           message.client.channels.cache
