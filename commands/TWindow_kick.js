@@ -35,7 +35,7 @@ module.exports = {
           )
         if (player.status === 'new')
           return message.channel.send(
-            `❌ Ошибка! ${player.name} нельзя отчислить в этом сезоне.`
+            `❌ Ошибка! **${player.name}** нельзя отчислить в этом сезоне.`
           )
 
         User.updateOne(
@@ -45,7 +45,7 @@ module.exports = {
               { assistId: message.author.id },
             ],
           },
-          { $inc: { money: player.value } }
+          { $inc: { money: Number(Math.round(player.value + 'e2') + 'e-2') } }
         ).then(() => {
           message.channel.send(`${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`)
           message.client.channels.cache

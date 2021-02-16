@@ -108,7 +108,8 @@ module.exports = {
               {
                 $inc: {
                   money: -Number(Math.round(winnerBid.price + 'e2') + 'e-2'),
-                  coeff: 0.2
+                  coeff: 0.2,
+                  players: 1
                 },
               },
               { useFindAndModify: false }
