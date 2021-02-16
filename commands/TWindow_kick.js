@@ -18,6 +18,10 @@ module.exports = {
         return message.channel.send(
           `❌ Ошибка! Доступно только для участников сетевой.`
         )
+      if (user.players <= 18)
+        return message.channel.send(
+          `❌ Ошибка! В составе должно оставаться минимум 18 игроков.`
+        )
 
       let playerId = args[0]
 

@@ -9,8 +9,8 @@ const schema = new Schema ({
 	currentRound: {type: Number, default: 1},
 	nextRound: {type: Number, default: 1},
 	coeff: {type: Number, default: 1},
-	isFinished: {type: Boolean, default: false},
-	money: {type: Number}
+	money: {type: Number},
+	players: {type: Number}
 })
 
 module.exports = model('User', schema)

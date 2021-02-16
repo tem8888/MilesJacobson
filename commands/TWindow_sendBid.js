@@ -57,11 +57,11 @@ module.exports = {
             if (!user)
               return message.channel.send(
                 `❌ Ошибка! Только для участников сетевой.`
-              ) // только для участников сетевой   //ВЕРНУТЬ
-            // if (user.currentRound > user.nextRound)
-            //   return message.channel.send(
-            //     `❌ Ошибка! Вы уже сделали бид в этом раунде.`
-            //   )
+              ) // только для участников сетевой   
+            if (user.currentRound > user.nextRound)
+              return message.channel.send(
+                `❌ Ошибка! Вы уже сделали бид в этом раунде.`
+              )
             if (user.currentRound < user.nextRound)
               return message.channel.send(
                 `❌ Ошибка! Следующий раунд еще не начался.`

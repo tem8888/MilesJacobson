@@ -6,7 +6,8 @@ const roundEnd = async (round) => {
   // Все биды, сделанные в определенном раунде равны 0. Номер раунда им присваивается после завершения раунда.
   await Bid.updateMany({round: 0}, {round: round}) 
 
-  //await User.updateMany({$and: [{currentRound: round-1, isFinished: false}]}, {$inc: {coeff: 0.2}})
+  // Если менеджер не сделал бид в раунде, то все равно нужно увеличить кеф
+  await User.updateMany({$and: [{currentRound: round}]}, {$inc: {coeff: 0.2}})
 
   await User.updateMany({}, {nextRound: round+1, currentRound: round})
   

@@ -2,7 +2,7 @@ const User = require('../models/User')
 const Squads = require('../models/Squad')
 
 module.exports = {
-  name: 'end',
+  name: 'end_delete',
   description: 'Transfer Window ending',
   execute(message, args) {
     // User.findOneAndUpdate({userId: message.author.id},{isFinished: true},{useFindAndModify: false}).then(() => {

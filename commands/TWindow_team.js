@@ -22,7 +22,7 @@ module.exports = {
         message.channel.send({
           embed: {
             color: 3553599,
-            title: `_ _          🛡️ ${user.club} _ _ _ _ _ _ 💰 ${user.money} £ млн`,
+            title: `_ _          🛡️ ${user.club} _ _ _ _ _ _ 💰 ${+user.money.toFixed(2)} £ млн`,
             footer: {
               text: `Всего игроков: ${playerList.length}`,
             },

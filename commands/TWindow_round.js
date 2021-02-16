@@ -23,7 +23,7 @@ module.exports = {
     }
     if (args[1] === 'check') {
       let msgContent = ''
-      User.find({ $or: [{ currentRound: round, isFinished: false }] })
+      User.find({ currentRound: round })
         .then((users) => {
           for (user of users) {
             msgContent += `🦥 ${user.username}\n`
@@ -34,7 +34,7 @@ module.exports = {
           message.channel.send(`Все сделали биды, молодцы!`)
         })
     } else if (args[1] === 'end') {
-      message.channel.send(`✅ РАУНД ${round} ЗАКОНЧЕН.`)
+      message.channel.send(`✅ **РАУНД ${round} ЗАКОНЧЕН.**`)
 
       Bid.find({ round: 0 }) // Ищем биды, которые еще не были обработаны
         .then( async (bidList) => {
