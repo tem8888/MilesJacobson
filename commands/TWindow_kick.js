@@ -22,20 +22,16 @@ module.exports = {
         return message.channel.send(
           `❌ Ошибка! В составе должно оставаться минимум 18 игроков.`
         )
-
       let playerId = args[0]
-
+      
       Squad.findOneAndDelete(
-        { uid: playerId },
+        { uid: playerId, status: {$not: { $regex: "new" } }, club: user.club},
         { useFindAndModify: false }
       ).then((player) => {
+
         if (!player)
           return message.channel.send(
-            `❌ Ошибка! Игрока с таким ID нет в вашей команде.`
-          )
-        if (player.status === 'new')
-          return message.channel.send(
-            `❌ Ошибка! **${player.name}** нельзя отчислить в этом сезоне.`
+            `❌ Ошибка! Вы не можете отчислить игрока с таким ID.`
           )
 
         User.updateOne(
@@ -48,7 +44,7 @@ module.exports = {
           { 
             $inc: { 
               money: Number(Math.round(player.value + 'e2') + 'e-2'),
-              players: -1  
+             // players: -1  
             } 
           } 
         ).then(() => {
