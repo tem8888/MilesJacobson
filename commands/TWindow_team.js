@@ -17,7 +17,12 @@ module.exports = {
         let players = ''
 
         for (player of playerList) {
-          players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+          if (player.status === 'new') {
+            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+          } else {
+            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+          }
+          
         }
         message.channel.send({
           embed: {
