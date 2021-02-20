@@ -23,12 +23,11 @@ module.exports = {
           `❌ Ошибка! В составе должно оставаться минимум 18 игроков.`
         )
       let playerId = args[0]
-      
+
       Squad.findOneAndDelete(
-        { uid: playerId, status: {$not: { $regex: "new" } }, club: user.club},
+        { uid: playerId, status: { $not: { $regex: 'new' } }, club: user.club },
         { useFindAndModify: false }
       ).then((player) => {
-
         if (!player)
           return message.channel.send(
             `❌ Ошибка! Вы не можете отчислить игрока с таким ID.`
@@ -41,14 +40,16 @@ module.exports = {
               { assistId: message.author.id },
             ],
           },
-          { 
-            $inc: { 
+          {
+            $inc: {
               money: Number(Math.round(player.value + 'e2') + 'e-2'),
-             // players: -1  
-            } 
-          } 
+              players: -1,
+            },
+          }
         ).then(() => {
-          message.channel.send(`${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`)
+          message.channel.send(
+            `${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`
+          )
           message.client.channels.cache
             .get(process.env.BID_CONFIRM_CHANNEL)
             .send(
