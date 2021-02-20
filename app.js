@@ -22,11 +22,11 @@ const appID = process.env.CLIENT_ID
 const PREFIX = process.env.PREFIX
 const guildID = process.env.GUILD_ID
 
-const interaction = new DiscordInteractions({
-  applicationId: appID,
-  authToken: process.env.BOT_TOKEN,
-  publicKey: process.env.PUBLIC_KEY,
-})
+// const interaction = new DiscordInteractions({
+//   applicationId: appID,
+//   authToken: process.env.BOT_TOKEN,
+//   publicKey: process.env.PUBLIC_KEY,
+// })
 
 const commandFiles = fs
   .readdirSync('./commands')
@@ -39,7 +39,7 @@ for (const file of commandFiles) {
 
 client.once('ready', async () => {
   console.log('Bot is ready!')
-  client.user.setActivity('Cyberpunk 2077')
+  client.user.setActivity('Football Manager 2022')
 
   // client.api
   //   .applications(appID)
@@ -196,28 +196,28 @@ client.on('messageReactionAdd', async (reaction, user) => {
   } else if (emoji.name == '↗️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.05) + 'e2') + 'e-2'),
+      Number(Math.round(Number(bidmsg[3].slice(11, -5)) * 1.05 + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⬆️') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.1) + 'e2') + 'e-2'),
+      Number(Math.round(Number(bidmsg[3].slice(11, -5)) * 1.1 + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '⏫') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.2) + 'e2') + 'e-2'),
+      Number(Math.round(Number(bidmsg[3].slice(11, -5)) * 1.2 + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
   } else if (emoji.name == '🆙') {
     sendBid.execute(message, [
       bidmsg[2].slice(6, -2),
-      Number(Math.round((Number(bidmsg[3].slice(11, -5)) * 1.4) + 'e2') + 'e-2'),
+      Number(Math.round(Number(bidmsg[3].slice(11, -5)) * 1.4 + 'e2') + 'e-2'),
       user.id,
       user.username,
     ])
