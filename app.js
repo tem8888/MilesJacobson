@@ -163,19 +163,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
       await User.findOneAndUpdate(
         // обновляем баланс продающего
         { club: changeInfo[0] },
-        { $inc: { money: Number(changeInfo[1]) } },
+        { $inc: { money: Number(changeInfo[1]), players: -1 } },
         { useFindAndModify: false }
       )
       await User.findOneAndUpdate(
         // обновляем баланс покупающего
         { club: changeInfo[2] },
-        { $inc: { money: -Number(changeInfo[1]) } },
+        { $inc: { money: -Number(changeInfo[1]), players: 1 } },
         { useFindAndModify: false }
       )
       // меняем клуб у игрока
       await Squad.findOneAndUpdate(
         { uid: changeInfo[3] },
-        { club: changeInfo[2], mins: 0 },
+        { club: changeInfo[2], status: 'new' },
         { useFindAndModify: false }
       )
     }
