@@ -244,47 +244,6 @@ client.on('message', (message) => {
   }
 })
 
-const clubsEmbed = new Discord.MessageEmbed()
-  .setColor('#0099ff')
-  .setTitle('Клубы и участники сетевой')
-  .setURL('https://discord.js.org/')
-  .setAuthor(
-    'СЕТЕВАЯ БРИТАНИЯ 2021',
-    'https://i.imgur.com/wSTFkRM.png',
-    'https://discord.js.org'
-  )
-  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
-  .addFields(
-    {
-      name: 'Клуб',
-      value: `<:blackb:788128062763958352> Blackburn
-    <:clBlackpool:788132421844467723> Blackpool
-    <:clCharlton:788449223796195379> Charlton
-    <:clCork:787462185625845790> Cork
-    <:clCrewe:788453149249110058> Crewe
-    <:clDundee:788439059604439070> Dundee
-    <:clDundeeU:788434818437218326> Dundee United
-    <:clIpswich:787421399714365470> Ipswich
-    <:clKilmarnock:788401253205278741> Kilmarnock
-    <:clBoro:788434937618497536> Middlesbrough
-    <:clNomads:788459617897414656> Connah's Quay
-    <:clForest:787418118027739137> Nottingham Forest\u00A0\u00A0\u00A0
-    <:clOxford:787800122251149392> Oxford United
-    <:clPartick:788121883371372594> Partick Thistle
-    <:clPortsmouth:787772178732154910> Portsmouth
-    <:clSheffW:788406878715117608> Sheffield Wed
-    <:clSunderland:787447964079489064> Sunderland
-    <:clSwindon:787780499900727346> Swindon Town`,
-      inline: true,
-    },
-    {
-      name: 'Менеджер [ассистент]',
-      value:
-        ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: Роман\n:scotland: tem\n:scotland: Criomar\n:england: plasteelin [E6ison]\n:scotland: Dragovic1982\n:england: Igor\n:wales: piggy [Ilya]\n:england: Arisen\n:england: Alxun\n:scotland: Karsoris [Ez]\n:england: AstraDelic\n:england: sashanik\n:england: YurDav\n:england: SMS',
-      inline: true,
-    }
-  )
-
 //client.ws.on('INTERACTION_CREATE', async (interaction) => {
 //console.log(interaction)
 // app.post(`/applications/${appID}/commands`, verifyKeyMiddleware('e55015414053bff3bf102c38c06244cb8869a7eb67a62fc836ab12ecbf6167ac'), (req, res) => {
