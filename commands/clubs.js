@@ -2,13 +2,15 @@ const Discord = require('discord.js')
 const clubsEmbed = new Discord.MessageEmbed()
   .setColor('#0099ff')
   .setTitle('Клубы и участники сетевой')
-  .setURL('https://discord.js.org/')
+  .setURL(
+    'https://i.pinimg.com/originals/4d/22/ca/4d22ca8cf25a747ad3152163a0635e5f.gif'
+  )
   .setAuthor(
     'СЕТЕВАЯ БРИТАНИЯ 2021',
-    'https://i.imgur.com/wSTFkRM.png',
-    'https://discord.js.org'
+    'https://i.ibb.co/H2R02Qm/12.png',
+    'https://i.pinimg.com/originals/4d/22/ca/4d22ca8cf25a747ad3152163a0635e5f.gif'
   )
-  .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+  .setThumbnail('https://i.ibb.co/H2R02Qm/12.png')
   .addFields(
     {
       name: 'Клуб',
@@ -35,7 +37,7 @@ const clubsEmbed = new Discord.MessageEmbed()
     {
       name: 'Менеджер [ассистент]',
       value:
-        ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: plasteelin\n:scotland: tem\n:scotland: Criomar\n:england: Igor\n:scotland: Dragovic1982\n:england: Rak Tyt\n:wales: piggy\n:england: Arisen\n:england: Alxun\n:scotland: Ilya [Klatz_Klatz]\n:england: AstraDelic [e5ison]\n:england: SmX\n:england: YurDav\n:england: SMS',
+        ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: plasteelin\n:scotland: tem\n:scotland: Criomar\n:england: Igor\n:scotland: Dragovic1982\n:england: Rak Tyt\n:wales: piggy\n:england: Arisen\n:england: Alxun\n:scotland: Ilya [Klatz_Klatz]\n:england: AstraDelic [edi5on]\n:england: SmX\n:england: YurDav\n:england: SMS',
       inline: true,
     }
   )
