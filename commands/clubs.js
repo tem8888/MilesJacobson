@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const clubsEmbed = new Discord.MessageEmbed()
   .setColor('#0099ff')
   .setTitle('Клубы и участники сетевой')
