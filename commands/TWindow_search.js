@@ -1,7 +1,7 @@
 const Transfer = require('../models/Transfer')
 
 module.exports = {
-  name: 'search',
+  name: 's',
   description: 'Search player',
   execute(message, args) {
     let name = args.join(' ')

@@ -6,23 +6,44 @@ module.exports = {
   name: 'bid',
   description: 'Send Bid in specific channel',
   execute(message, args) {
-
     if (message.channel.type !== 'dm') return
     if (args.length !== 2 && !message.author.bot)
       return message.channel.send(
-        `❌ Ошибка! Запись должна содержать 2 аргумента (**уникальный номер игрока**, **цена**)!`
+        `❌ Ошибка! Запись должна содержать 2 аргумента (**уникальный номер игрока**, **цена/отмену**)!`
       )
 
-    if ((isNaN(Number(args[args.length-1])) || Number(args[args.length-1]) < 0) && !message.author.bot) {
+    if (args[args.length - 1] === 'cancel') {
+      User.updateOne(
+        {
+          $or: [{ userId: message.author.id }, { assistId: message.author.id }],
+        },
+        { $inc: { currentRound: -1 } }
+      ).then(() => {
+        message.client.channels.cache
+          .get(process.env.BID_SEND_CHANNEL)
+          .send(`> **${message.author.tag}** отменил свой бид.`)
+      })
+      return message.channel.send(
+        `☑️ Бид на игрока с id: **${args[0]}** отменен.`
+      )
+    }
+
+    if (
+      (isNaN(Number(args[args.length - 1])) ||
+        Number(args[args.length - 1]) < 0) &&
+      !message.author.bot
+    ) {
       return message.channel.send(
         '❌ Ошибка! Неправильная запись цены за игрока. Разделитель дробной части - точка ` . `'
       )
     }
-    
+
     if (!message.author.bot) {
-      let fractNum = args[args.length-1].split('.')
+      let fractNum = args[args.length - 1].split('.')
       if (fractNum[fractNum.length - 1].length > 2) {
-        return message.channel.send('❌ Ошибка! Допускается только 2 знака после запятой (точки)')
+        return message.channel.send(
+          '❌ Ошибка! Допускается только 2 знака после запятой (точки)'
+        )
       }
     }
 
@@ -57,7 +78,7 @@ module.exports = {
             if (!user)
               return message.channel.send(
                 `❌ Ошибка! Только для участников сетевой.`
-              ) // только для участников сетевой   
+              ) // только для участников сетевой
             if (user.currentRound > user.nextRound)
               return message.channel.send(
                 `❌ Ошибка! Вы уже сделали бид в этом раунде.`

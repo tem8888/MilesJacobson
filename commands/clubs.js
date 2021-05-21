@@ -37,7 +37,7 @@ const clubsEmbed = new Discord.MessageEmbed()
     {
       name: 'Менеджер [ассистент]',
       value:
-        ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: plasteelin\n:scotland: tem\n:scotland: Criomar\n:england: Igor\n:scotland: Dragovic1982\n:england: Rak Tyt\n:wales: piggy\n:england: Arisen\n:england: Alxun\n:scotland: Ilya [Klatz_Klatz]\n:england: AstraDelic [edi5on]\n:england: SmX\n:england: YurDav\n:england: SMS',
+        ':england: maximko\n:england: hooligan4ik\n:england: al necheporenko\n:flag_ie: monkey-d-lufffy\n:england: plasteelin\n:scotland: tem\n:scotland: Criomar\n:england: Igor\n:scotland: Dragovic1982\n:england: Rak Tyt\n:wales: piggy\n:england: Arisen\n:england: Alxun\n:scotland: Ilya [Klatz_Klatz]\n:england: AstraDelic [edi5on]\n:england: SmX [Troyan]\n:england: YurDav [dalekhov]\n:england: SMS',
       inline: true,
     }
   )
