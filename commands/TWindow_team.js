@@ -5,9 +5,11 @@ module.exports = {
   name: 'team',
   description: 'Show team players',
   execute(message, args) {
-    if (args) {
+    if (args.length > 0) {
       let club = args.join(' ')
       Squad.find({ club: club }).then((playerList) => {
+        if (playerList.length === 0)
+          return message.channel.send('❌ Клуб не найден.')
         let players = ''
 
         for (player of playerList) {
@@ -30,6 +32,7 @@ module.exports = {
       })
       return
     }
+
     User.findOne({
       $or: [{ userId: message.author.id }, { assistId: message.author.id }],
     }).then((user) => {
