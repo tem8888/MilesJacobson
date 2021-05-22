@@ -7,26 +7,50 @@ module.exports = {
   description: 'Send Bid in specific channel',
   execute(message, args) {
     if (message.channel.type !== 'dm') return
+
+    if (args.length === 1 && args[0] === 'cancel' && !message.author.bot) {
+      Bid.findOneAndDelete(
+        {
+          // Ищем сделанный бид конкретным пользователем на игрока в текущем раунде (раунд в Bid обновляется только после его завершения)
+          $and: [{ userId: message.author.id }, { round: 0 }],
+        },
+        function (err, docs) {
+          if (err) {
+            console.log(err)
+          } else {
+            if (!docs) message.channel.send(`❌ Такой бид вы не делали.`)
+            // Если бид не найден
+            else {
+              // если бид найден и удален, обновляем счетчик раундов пользователя
+              User.updateOne(
+                {
+                  $or: [
+                    { userId: message.author.id },
+                    { assistId: message.author.id },
+                  ],
+                },
+                { $inc: { currentRound: -1 } }
+              ).then(() => {
+                message.client.channels.cache
+                  .get(process.env.BID_SEND_CHANNEL)
+                  .send(
+                    `> **${message.author.tag}** отменил бид на **${docs.player}** (id: ${docs.playerId}).`
+                  )
+              })
+              message.channel.send(
+                `☑️ Бид на **${docs.player}** (id: ${docs.playerId}) отменен.`
+              )
+            }
+          }
+        }
+      )
+      return
+    }
+
     if (args.length !== 2 && !message.author.bot)
       return message.channel.send(
-        `❌ Ошибка! Запись должна содержать 2 аргумента (**уникальный номер игрока**, **цена/отмену**)!`
+        `❌ Ошибка! Чтобы сделать бид, запись должна содержать 2 аргумента (**уникальный номер игрока**, **цена**)!`
       )
-
-    if (args[args.length - 1] === 'cancel') {
-      User.updateOne(
-        {
-          $or: [{ userId: message.author.id }, { assistId: message.author.id }],
-        },
-        { $inc: { currentRound: -1 } }
-      ).then(() => {
-        message.client.channels.cache
-          .get(process.env.BID_SEND_CHANNEL)
-          .send(`> **${message.author.tag}** отменил свой бид.`)
-      })
-      return message.channel.send(
-        `☑️ Бид на игрока с id: **${args[0]}** отменен.`
-      )
-    }
 
     if (
       (isNaN(Number(args[args.length - 1])) ||
