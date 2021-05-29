@@ -36,7 +36,7 @@ module.exports = {
         },
       })
     } else {
-      message.client.channels.cache.get(resultChannel).send({
+      message.client.channels.cache.get(process.env.GG_RESULT_CHANNEL).send({
         embed: {
           color: 3553599,
           description: `${cont}`,
