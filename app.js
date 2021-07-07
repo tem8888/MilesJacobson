@@ -78,14 +78,14 @@ client.once('ready', async () => {
 client.on('guildMemberAdd', (member) => {
   member.roles.add(process.env.GUEST_ROLE)
   let generalChannel = client.channels.cache.get(process.env.GUEST_CHANNEL) // Replace with known channel ID
-  generalChannel.send('Добро пожаловать, <@' + member.user.id + '>!')
+  generalChannel.send('Приветствуем, <@' + member.user.id + '>!')
   const nmsg = member.guild.channels.cache.get(process.env.GUEST_CHANNEL)
   nmsg.send({
     embed: {
       color: 16777215,
       title: 'Правила ⇓',
       description:
-        '<#502769170400673792>\n\nЕсли вы хотите остаться на сервере не только как читатель, то нам важно узнать о вас немного больше. <@371973105884856331> прислал вам сообщение в ЛС, прочтите, пожалуйста.',
+        '<#502769170400673792>\n\nЕсли вы хотите остаться на сервере не только как читатель, то нам важно узнать о вас немного больше. <@750349474815017015> прислал вам сообщение в ЛС, прочтите, пожалуйста.',
       thumbnail: {
         url: 'https://media.giphy.com/media/d2r5afIHy34mWTM8r4/giphy.gif',
       },
