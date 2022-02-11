@@ -2,15 +2,17 @@ const {Schema, model} = require('mongoose')
 
 const schema = new Schema ({
 	userId: {type: String, required: true},
-	assistId: {type: String, default: ""},
-	username: {type: String},
-	place: {type: Number},
+	assistId: {type: String},
+	username: {type: String, required: true},
 	club: {type: String},
-	currentRound: {type: Number, default: 1},
-	nextRound: {type: Number, default: 1},
-	coeff: {type: Number, default: 1},
+	place: {type: Number},
+	currentRound: {type: Number},
+	nextRound: {type: Number},
+	bidStatus: {type: String},
+	coeff: {type: Number},
 	money: {type: Number},
-	players: {type: Number}
+	players: {type: Number},
+	password: {type: String, required: true},
 })
 
 module.exports = model('User', schema)

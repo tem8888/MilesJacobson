@@ -1,4 +1,4 @@
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 
 module.exports = {
   name: 's',
@@ -6,7 +6,7 @@ module.exports = {
   execute(message, args) {
     let name = args.join(' ')
 
-    Transfer.findOne({ name: { $regex: name, $options: 'i' } }).then(
+    Player.findOne({ name: { $regex: name, $options: 'i' } }).then(
       (player) => {
         !player
           ? message.channel.send('❌ Игрок не найден.')

@@ -1,6 +1,6 @@
 const Bid = require('../models/Bid')
 const User = require('../models/User')
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 
 module.exports = {
   name: 'reset',
@@ -14,6 +14,6 @@ module.exports = {
       {},
       { currentRound: 0, nextRound: 1, coeff: 1, isFinished: false }
     ).then(() => message.channel.send(`✅ Раунды сброшены.`))
-    Transfer.updateMany({}, { status: '' }).then(() => null)
+    Player.updateMany({}, { status: '' }).then(() => null)
   },
 }

@@ -10,4 +10,4 @@ const schema = new Schema({
   status: {type: String, default: ''}
 })
 
-module.exports = model('Transfer', schema)
+module.exports = model('Player', schema)

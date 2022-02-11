@@ -1,6 +1,6 @@
 const Bid = require('../models/Bid')
 const User = require('../models/User')
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 
 module.exports = {
   name: 'bid',
@@ -29,7 +29,8 @@ module.exports = {
                     { assistId: message.author.id },
                   ],
                 },
-                { $inc: { currentRound: -1 } }
+               // { $inc: { currentRound: -1 } }
+               { $set: { bidStatus: 'open' } }
               ).then(() => {
                 message.client.channels.cache
                   .get(process.env.BID_SEND_CHANNEL)
@@ -80,15 +81,15 @@ module.exports = {
       username = args[3]
     } // если бид был сделан через бота, то определяем доп параметры
 
-    Transfer.findOne({ uid: playerId }).then((transfer) => {
+    Player.findOne({ uid: playerId }).then((Player) => {
       // Проверка на доступность к трансферу
-      if (!transfer) {
+      if (!Player) {
         return message.channel.send(`❌ Ошибка! Игрока с таким ID в базе нет.`)
-      } else if (transfer.status === 'finished') {
+      } else if (Player.status === 'done') {
         return message.channel.send(`❌ Ошибка! Игрок таким ID уже продан.`)
-      } else if (Number(transfer.price) > price) {
+      } else if (Number(Player.price) > price) {
         return message.channel.send(
-          `❌ Ошибка! Минимальная цена за ${transfer.name} составляет ${transfer.price}.`
+          `❌ Ошибка! Минимальная цена за ${Player.name} составляет ${Player.price}.`
         )
       } else {
         User.findOne({
@@ -103,14 +104,22 @@ module.exports = {
               return message.channel.send(
                 `❌ Ошибка! Только для участников сетевой.`
               ) // только для участников сетевой
-            if (user.currentRound > user.nextRound)
+            if (user.currentRound === 0)
               return message.channel.send(
-                `❌ Ошибка! Вы уже сделали бид в этом раунде.`
+                `❌ Ошибка! Трансферное окно еще закрыто.`
               )
-            if (user.currentRound < user.nextRound)
+            if (user.bidStatus === 'closed')
               return message.channel.send(
-                `❌ Ошибка! Следующий раунд еще не начался.`
+                `❌ Ошибка! Вы уже сделали бид в этом раунде или новый раунд еще не стартовал.`
               )
+            // if (user.currentRound > user.nextRound)
+            //   return message.channel.send(
+            //     `❌ Ошибка! Вы уже сделали бид в этом раунде.`
+            //   )
+            // if (user.currentRound < user.nextRound)
+            //   return message.channel.send(
+            //     `❌ Ошибка! Следующий раунд еще не начался.`
+            //   )
             if (price > user.money)
               return message.channel.send(
                 `❌ Ошибка! У вас недостаточно средств. Баланс: ${user.money}`
@@ -122,7 +131,7 @@ module.exports = {
                 `> Бид от **${!username ? message.author.tag : username}** (${
                   user.club
                 }). Игрок: **${
-                  transfer.name
+                  Player.name
                 }** (id: ${playerId}). Ставка: £**${price}**млн`
               )
 
@@ -132,7 +141,7 @@ module.exports = {
               place: user.place,
               coeff: user.coeff,
               playerId: playerId,
-              player: transfer.name,
+              player: Player.name,
               price: price,
             })
             bidData.save((err, bid) => {
@@ -142,7 +151,8 @@ module.exports = {
               )
               User.updateOne(
                 { userId: bid.userId },
-                { $inc: { currentRound: 1 } }
+              //  { $inc: { currentRound: 1 } }
+              { $set: { bidStatus: 'closed' } }
               ).then(() => null)
             })
           })

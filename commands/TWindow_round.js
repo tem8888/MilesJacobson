@@ -1,6 +1,6 @@
 const User = require('../models/User')
 const Bid = require('../models/Bid')
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 const sendWinnersMessages = require('../functions/sendWinnersMessages')
 const editMoneyTable = require('../functions/editMoneyTable')
 const roundEnd = require('../functions/roundEnd')
@@ -16,7 +16,6 @@ module.exports = {
     if (args.length !== 2)
       return message.channel.send(`❌ Неправильное число аргументов.`)
     let round = Number(args[0]) // номер раунда как второй параметр
-
     if (args[1] === 'start') {
       message.channel.send(`☑️ <@&${process.env.ONLINE_ROLE}> РАУНД **#${round}** НАЧАЛСЯ.`)
       roundStart(round)
@@ -43,7 +42,8 @@ module.exports = {
            label: for (let i = 1; i <= bidList.length; i++) {
           //  label: for (const i of Array.from(Array(bidList.length).keys()).slice(1)) {
             let myBid = bidList[i - 1]
-            let winnerBid = {}
+            let winnerBid = {losers:[]}
+           // let loserBid = {}
           //  winnerBid.losers = []
             let checkBid = false // Проверка, что на игрока были другие биды
 
@@ -59,26 +59,33 @@ module.exports = {
               for (bid of bidList.slice(i)) {
 
                 if (myBid.playerId === bid.playerId) {
+                  //
                   // Если нашлось пересечение по игроку
+                  //
                   checkBid = true
 
                   let coeff1 = myBid.price * bid.coeff
                   let coeff2 =  bid.price * myBid.coeff
 
                   if (coeff1 < coeff2) {
-                    winnerBid = bid
-                    // winnerBid.losers.push({
-                    //   club: myBid.club,
-                    //   price: myBid.price
-                    // })
+                   // winnerBid = bid
+                    winnerBid = Object.assign(bid, winnerBid)
+                    //loserBid = myBid
+                    winnerBid.losers.push({
+                      club: myBid.club,
+                      price: myBid.price
+                    })
                     // winnerBid = Object.assign(winnerBid, bid.toObject())
                     myBid = bid
                   } else if (coeff1 > coeff2) {
-                    winnerBid = myBid
-                    // winnerBid.losers.push({
-                    //   club: bid.club,
-                    //   price: bid.price
-                    // })
+                   // winnerBid = myBid
+                   winnerBid = Object.assign(myBid, winnerBid)
+                    //loserBid = bid
+
+                    winnerBid.losers.push({
+                      club: bid.club,
+                      price: bid.price
+                    })
                     // winnerBid = Object.assign(winnerBid, myBid.toObject())
                   } else {
                     // Если случилась ничья, определяем победителя по занятой позиции
@@ -103,7 +110,9 @@ module.exports = {
               status: 'new',
             })
             await User.findOneAndUpdate(
-              // обновляем баланс клубов в БД
+              //
+              // обновляем данные клубов в БД - баланс, коэффициент, число игроков
+              //
               { userId: winnerBid.userId },
               {
                 $inc: {
@@ -114,10 +123,12 @@ module.exports = {
               },
               { useFindAndModify: false }
             )
+            //
            // Ставим игроку новый статус, чтобы нельзя было повторно кинуть по нему бид
-            await Transfer.findOneAndUpdate(
+           //
+            await Player.findOneAndUpdate(
               { uid: winnerBid.playerId },
-              { status: 'finished' },
+              { status: 'done' },
               { upsert: true, useFindAndModify: false }
             )
             

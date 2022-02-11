@@ -1,4 +1,4 @@
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max)

@@ -1,4 +1,4 @@
-const Transfer = require('../models/Transfer')
+const Player = require('../models/Player')
 
 module.exports = {
 	name: 'poll',

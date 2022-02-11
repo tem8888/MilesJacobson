@@ -8,8 +8,9 @@ const roundEnd = async (round) => {
 
   // Если менеджер не сделал бид в раунде, то все равно нужно увеличить кеф
   await User.updateMany({$and: [{currentRound: round}]}, {$inc: {coeff: 0.2}})
+ 
 
-  await User.updateMany({}, {nextRound: round+1, currentRound: round})
+ // await User.updateMany({}, {nextRound: round+1, currentRound: round})
   
 }
 

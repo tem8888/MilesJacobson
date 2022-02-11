@@ -1,21 +1,29 @@
 const sendWinnersMessages = (bidWinnersList, message) => {
   let bidCount = 0
+  
   let interval = setInterval(async function () {
-
-    // if (bidWinnersList[bidCount].losers.length !== 0 || bidWinnersList[bidCount].losers === undefined) { // если есть лузера
-    //   for (los of bidWinnersList[bidCount].losers) {
-    //     losers += `${los.club} (£${los.price} млн)\n `
-    //   }
-    //   descr = `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: £**${bidWinnersList[bidCount].price}**млн\n ${losers}`
-    // } else { // если нет лузеров
-    // }
-
-    message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL).send({
-      embed: {
-        color: 3553599,
-        description: `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: £**${bidWinnersList[bidCount].price}**млн`,
-      },
-    })
+console.log(bidWinnersList)
+    if (bidWinnersList[bidCount].hasOwnProperty('losers')) { // если есть лузера
+      let losers = ''
+      for (los of bidWinnersList[bidCount].losers) {
+        losers += `-✘- *${los.club} (£${los.price} млн)* `
+      }
+      descr = `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: £**${bidWinnersList[bidCount].price}**млн\n ${losers}`
+      message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL).send({
+        embed: {
+          color: 3553599,
+          description: descr,
+        },
+      })
+    } else { // если нет лузеров
+      descr = `✅ Клуб **${bidWinnersList[bidCount].club}** завершил сделку по игроку **${bidWinnersList[bidCount].player}**.\n💷 Сумма трансфера: £**${bidWinnersList[bidCount].price}**млн`,
+      message.client.channels.cache.get(process.env.BID_CONFIRM_CHANNEL).send({
+        embed: {
+          color: 3553599,
+          description: descr,
+        }
+      })
+    }
     bidCount += 1
   }, 2000)
 
