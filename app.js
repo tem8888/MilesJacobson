@@ -16,7 +16,7 @@ client.commands = new Discord.Collection()
 const sendBid = require('./commands/TWindow_sendBid')
 const editMoneyTable = require('./functions/editMoneyTable')
 const User = require('./models/User')
-const Squad = require('./models/Squad')
+const Squadlist = require('./models/Squadlist')
 require('dotenv').config()
 const appID = process.env.CLIENT_ID
 const PREFIX = process.env.PREFIX
@@ -124,12 +124,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
         { useFindAndModify: false }
       )
       // меняем у игрока клубы местами
-      await Squad.findOneAndUpdate(
+      await Squadlist.findOneAndUpdate(
         { uid: changeInfo[2] },
         { club: changeInfo[1], mins: 0 },
         { useFindAndModify: false }
       )
-      await Squad.findOneAndUpdate(
+      await Squadlist.findOneAndUpdate(
         { uid: changeInfo[5] },
         { club: changeInfo[4], mins: 0 },
         { useFindAndModify: false }
@@ -149,7 +149,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         { useFindAndModify: false }
       )
       // меняем клуб у игрока
-      await Squad.findOneAndUpdate(
+      await Squadlist.findOneAndUpdate(
         { uid: changeInfo[3] },
         { club: changeInfo[2], status: 'new' },
         { useFindAndModify: false }

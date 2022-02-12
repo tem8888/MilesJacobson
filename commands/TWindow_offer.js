@@ -1,4 +1,4 @@
-const Squad = require('../models/Squad')
+const Squadlist = require('../models/Squadlist')
 const User = require('../models/User')
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
         let playerId1 = args[1]
         let playerId2 = args[3]
 
-        Squad.find({ $or: [{ uid: playerId1 }, { uid: playerId2 }] }).then(
+        Squadlist.find({ $or: [{ uid: playerId1 }, { uid: playerId2 }] }).then(
           (players) => {
             if (players.length !== 2)
               return message.channel.send(
@@ -53,7 +53,7 @@ module.exports = {
           return message.channel.send(`❌ Ошибка! Клубы для сделки не найдены.`)
         let playerId1 = args[1]
 
-        Squad.findOne({ uid: playerId1 }).then((player) => {
+        Squadlist.findOne({ uid: playerId1 }).then((player) => {
           if (!player)
             return message.channel.send(
               `❌ Ошибка! Игрок для трансфера не найден.`
@@ -87,7 +87,7 @@ module.exports = {
     //       let user1 = users.find((u) => u.userId === message.author.id)
     //       let playerId1 = args[1]
 
-    //       Squad.findOne({ uid: playerId1 }).then((player) => {
+    //       Squadlist.findOne({ uid: playerId1 }).then((player) => {
     //         if (!player)
     //           return message.channel.send(
     //             `❌ Ошибка! Игрок для трансфера не найден.`

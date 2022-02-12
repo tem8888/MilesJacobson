@@ -1,4 +1,4 @@
-const Squad = require('../models/Squad')
+const Squadlist = require('../models/Squadlist')
 const User = require('../models/User')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
   execute(message, args) {
     if (args.length > 0) {
       let club = args.join(' ')
-      Squad.find({ club: club }).then((playerList) => {
+      Squadlist.find({ club: club }).then((playerList) => {
         if (playerList.length === 0)
           return message.channel.send('❌ Клуб не найден.')
         let players = ''
@@ -41,7 +41,7 @@ module.exports = {
           `❌ Ошибка! Доступно только для участников сетевой.`
         )
 
-      Squad.find({ club: user.club }).then((playerList) => {
+      Squadlist.find({ club: user.club }).then((playerList) => {
         let players = ''
 
         for (player of playerList) {

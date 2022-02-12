@@ -1,10 +1,10 @@
-const Squad = require('../models/Squad')
+const Squadlist = require('../models/Squadlist')
 const User = require('../models/User')
 const editMoneyTable = require('../functions/editMoneyTable')
 
 module.exports = {
   name: 'kick',
-  description: 'Kick squad player',
+  description: 'Kick Squadlist player',
   execute(message, args) {
     if (args.length !== 1)
       return message.channel.send(
@@ -24,7 +24,7 @@ module.exports = {
         )
       let playerId = args[0]
 
-      Squad.findOneAndDelete(
+      Squadlist.findOneAndDelete(
         { uid: playerId, status: { $not: { $regex: 'new' } }, club: user.club },
         { useFindAndModify: false }
       ).then((player) => {

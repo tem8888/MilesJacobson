@@ -5,7 +5,7 @@ const sendWinnersMessages = require('../functions/sendWinnersMessages')
 const editMoneyTable = require('../functions/editMoneyTable')
 const roundEnd = require('../functions/roundEnd')
 const roundStart = require('../functions/roundStart')
-const Squad = require('../models/Squad')
+const Squadlist = require('../models/Squadlist')
 
 module.exports = {
   name: 'round',
@@ -103,7 +103,7 @@ module.exports = {
             }
 
             bidWinnersList.push(winnerBid) // сохраняем победителей в отдельный массив
-            let newSquadPlayer = new Squad({
+            let newSquadPlayer = new Squadlist({
               uid: winnerBid.playerId,
               name: winnerBid.player,
               club: winnerBid.club,

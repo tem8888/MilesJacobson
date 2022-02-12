@@ -8,4 +8,4 @@ const schema = new Schema({
   status: { type: String },
 })
 
-module.exports = model('Squad', schema)
+module.exports = model('Squadlist', schema)
