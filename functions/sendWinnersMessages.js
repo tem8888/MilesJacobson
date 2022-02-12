@@ -1,8 +1,9 @@
 const sendWinnersMessages = (bidWinnersList, message) => {
   let bidCount = 0
+  if (bidWinnersList === undefined) return
   
   let interval = setInterval(async function () {
-console.log(bidWinnersList)
+ console.log({bidWinnersList})
     if (bidWinnersList[bidCount].hasOwnProperty('losers')) { // если есть лузера
       let losers = ''
       for (los of bidWinnersList[bidCount].losers) {

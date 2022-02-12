@@ -41,30 +41,6 @@ client.once('ready', async () => {
   console.log('Bot is ready!')
   client.user.setActivity('Football Manager 2022')
 
-  // client.api
-  //   .applications(appID)
-  //   .guilds(guildID)
-  //   .commands.post({
-  //     data: {
-  //       name: 'clubs',
-  //       description: 'Список всех участников сетевой',
-  //     },
-  //   })
-
-  // client.api
-  //   .applications(appID)
-  //   .guilds(guildID)
-  //   .commands.get()
-  //   .then((cmds) => console.log(cmds))
-  // client.api.applications(appID).guilds(guildID).commands("791741531459289128").delete().then(() => console.log("deleted"))
-  //client.api.applications(appID).guilds(guildID).commands("792215262636015637").delete().then(() => console.log("deleted"))
-
-  //  Get Guild Commands
-  // await interaction
-  // .getApplicationCommands(guildID)
-  // .then((cmds) => console.log(cmds))
-  // .catch(console.error);
-
   await mongoose
     .connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,

@@ -33,7 +33,7 @@ module.exports = {
           message.channel.send(`Все сделали биды, молодцы!`)
         })
     } else if (args[1] === 'end') {
-      message.channel.send(`✅ **РАУНД ${round} ЗАКОНЧЕН.**`)
+      message.client.channels.cache.get(process.env.MAIN_NETWORK_CHANNEL).send(`✅ **РАУНД ${round} ЗАКОНЧЕН.**`)
 
       Bid.find({ round: 0 }) // Ищем биды, которые еще не были обработаны
         .then( async (bidList) => {
