@@ -11,6 +11,7 @@ const schema = new Schema ({
 	money: {type: Number},
 	players: {type: Number},
 	password: {type: String, required: true},
+	extracoeff: {type: Number, default: 1.0} 
 })
 
 module.exports = model('User', schema)

@@ -42,7 +42,7 @@ module.exports = {
           },
           {
             $inc: {
-              money: Number(Math.round(player.price + 'e2') + 'e-2'),
+              money: Number(Math.round(player.price*user.extracoeff + 'e2') + 'e-2'),
               players: -1,
             },
           }
