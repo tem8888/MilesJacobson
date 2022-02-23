@@ -42,18 +42,18 @@ module.exports = {
           },
           {
             $inc: {
-              money: Number(Math.round(player.value + 'e2') + 'e-2'),
+              money: Number(Math.round(player.price + 'e2') + 'e-2'),
               players: -1,
             },
           }
         ).then(() => {
           message.channel.send(
-            `${player.name} отчислен. Получите £**${player.value}** млн, распишитесь.`
+            `${player.name} отчислен. Получите £**${player.price}** млн, распишитесь.`
           )
           message.client.channels.cache
             .get(process.env.BID_CONFIRM_CHANNEL)
             .send(
-              `✅ Игрок **${player.name}** отчислен из клуба ${user.club}. Получено £**${player.value}** млн.`
+              `✅ Игрок **${player.name}** отчислен из клуба ${user.club}. Получено £**${player.price}** млн.`
             )
 
           editMoneyTable(message)
