@@ -14,9 +14,9 @@ module.exports = {
 
         for (player of playerList) {
           if (player.status === 'new') {
-            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price}**\n`
           } else {
-            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price}**\n`
           }
         }
         message.channel.send({
@@ -46,9 +46,9 @@ module.exports = {
 
         for (player of playerList) {
           if (player.status === 'new') {
-            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price}**\n`
           } else {
-            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.value}**\n`
+            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price}**\n`
           }
         }
         message.channel.send({
