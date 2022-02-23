@@ -46,9 +46,9 @@ module.exports = {
 
         for (player of playerList) {
           if (player.status === 'new') {
-            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price*user.extracoeff}**\n`
+            players += `✘ **${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${(player.price*user.extracoeff).toFixed(2)}**\n`
           } else {
-            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${player.price*user.extracoeff}**\n`
+            players += `**${player.name}** _ _ ━ _ _ ${player.uid} _ _ ━ _ _ **${(player.price*user.extracoeff).toFixed(2)}**\n`
           }
         }
         message.channel.send({
